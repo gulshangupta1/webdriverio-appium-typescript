@@ -45,9 +45,9 @@ export class LoginPage {
         const passwordInputFieldEle = await $(this.locators.passwordInputField);
         await passwordInputFieldEle.waitForDisplayed();
         await passwordInputFieldEle.setValue(password);
+        await driver.hideKeyboard();
         const loginButtonEle = await $(this.locators.loginButton);
         await loginButtonEle.click();
-        await driver.pause(3000);
         const productTextOnHomeScreenEle = await $(this.locators.productTextOnHomeScreen);
         await productTextOnHomeScreenEle.isDisplayed();
         console.log('Login successfully');

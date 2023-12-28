@@ -1,4 +1,28 @@
 import type { Options } from '@wdio/types'
+const fs = require('fs');
+
+const ANDROID_CAPABILITIES = [
+    {
+        platformName: 'Android',
+        'appium:deviceName': 'Pixel_6_Pro',
+        'appium:platformVersion': '13.0',
+        'appium:automationName': 'UiAutomator2',
+        'appium:udid': 'emulator-5554',
+        'appium:app': `${process.cwd()}/app/android_sauce_lab_app.apk`,
+        'appium:chromedriverExecutable': `${process.cwd()}/app/chromedriver`
+    },
+];
+
+const IOS_CAPABILITIES = [
+    {
+        'platformName': 'iOS',
+        'appium:deviceName': 'iPhone 15 Pro',
+        'appium:automationName': 'XCUITest',
+        'appium:udid': '86E68CFA-349F-45F1-84D2-1956419487EE',
+        'appium:platformVersion': '17.0',
+        'appium:app': `${process.cwd()}/app/ios_sauce_app.app`
+    },
+];
 
 export const config: Options.Testrunner = {
     //
@@ -33,8 +57,7 @@ export const config: Options.Testrunner = {
     // will be called from there.
     //
     specs: [
-        // './test/specs/**/*.ts'
-        './test/specs/login.test.ts'
+        './test/specs/**/*.test.ts'
     ],
     // Patterns to exclude.
     exclude: [
@@ -62,6 +85,7 @@ export const config: Options.Testrunner = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
+
     capabilities: [{
         platformName: 'Android',
         'appium:deviceName': 'Pixel_6_Pro',
@@ -70,6 +94,8 @@ export const config: Options.Testrunner = {
         'appium:udid': 'emulator-5554',
         'appium:app': `${process.cwd()}/app/android/android_sauce_lab_app.apk`,
     }],
+    // capabilities: process.env.PLATFORM === "ANDROID" ? ANDROID_CAPABILITIES : IOS_CAPABILITIES,
+
     //
     // ===================
     // Test Configurations
@@ -140,7 +166,11 @@ export const config: Options.Testrunner = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: ['spec', ['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+    }]],
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -162,8 +192,9 @@ export const config: Options.Testrunner = {
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function (config, capabilities) {
+        console.log('Executing onPrepare hook');
+    },
     /**
      * Gets executed before a worker process is spawned and can be used to initialize specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -192,8 +223,9 @@ export const config: Options.Testrunner = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      * @param {string} cid worker id (e.g. 0-0)
      */
-    // beforeSession: function (config, capabilities, specs, cid) {
-    // },
+    beforeSession: function (config, capabilities, specs) {
+        console.log('Executing beforeSession hook');
+    },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.
@@ -201,26 +233,30 @@ export const config: Options.Testrunner = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
-    // },
+    before: function (capabilities, specs) {
+        console.log('Executing before hook');
+    },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {string} commandName hook command name
      * @param {Array} args arguments that command would receive
      */
-    // beforeCommand: function (commandName, args) {
-    // },
+    beforeCommand: function (commandName, args) {
+        console.log(`Executing beforeCommand hook for command: ${commandName}`);
+    },
     /**
      * Hook that gets executed before the suite starts
      * @param {object} suite suite details
      */
-    // beforeSuite: function (suite) {
-    // },
+    beforeSuite: function (suite) {
+        console.log('Executing beforeSuite hook');
+    },
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    // beforeTest: function (test, context) {
-    // },
+    beforeTest: function (test, context) {
+        console.log('Executing beforeTest hook');
+    },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
@@ -243,16 +279,25 @@ export const config: Options.Testrunner = {
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
+    afterTest: async function (test, context, { error, result, duration, passed, retries }) {
+        console.log('Executing afterTest hook');
+        // Ensure errorShots directory exists
+        if (!fs.existsSync("./errorShots")) {
+            fs.mkdirSync("./errorShots");
+        }
+        if (!passed) {
+            await driver.saveScreenshot(`./errorShots/${test.title.replaceAll(" ", "_")}.png`);
+        }
+    },
 
 
     /**
      * Hook that gets executed after the suite has ended
      * @param {object} suite suite details
      */
-    // afterSuite: function (suite) {
-    // },
+    afterSuite: function (suite) {
+        console.log('Executing afterSuite hook');
+    },
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name
@@ -260,8 +305,9 @@ export const config: Options.Testrunner = {
      * @param {number} result 0 - command success, 1 - command error
      * @param {object} error error object if any
      */
-    // afterCommand: function (commandName, args, result, error) {
-    // },
+    afterCommand: function (commandName, args, result, error) {
+        console.log(`Executing afterCommand hook for command: ${commandName}`);
+    },
     /**
      * Gets executed after all tests are done. You still have access to all global variables from
      * the test.
@@ -269,16 +315,18 @@ export const config: Options.Testrunner = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that ran
      */
-    // after: function (result, capabilities, specs) {
-    // },
+    after: function (result, capabilities, specs) {
+        console.log('Executing after hook');
+    },
     /**
      * Gets executed right after terminating the webdriver session.
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that ran
      */
-    // afterSession: function (config, capabilities, specs) {
-    // },
+    afterSession: function (config, capabilities, specs) {
+        console.log('Executing afterSession hook');
+    },
     /**
      * Gets executed after all workers got shut down and the process is about to exit. An error
      * thrown in the onComplete hook will result in the test run failing.
@@ -287,8 +335,9 @@ export const config: Options.Testrunner = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+    onComplete: function (exitCode, config, capabilities, results) {
+        console.log('Executing onComplete hook');
+    },
     /**
     * Gets executed when a refresh happens.
     * @param {string} oldSessionId session ID of the old session
