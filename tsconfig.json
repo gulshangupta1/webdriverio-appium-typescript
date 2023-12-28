@@ -23,12 +23,10 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        "outDir": "./dist",
         "noEmitOnError": true
     },
     "include": [
         "test",
         "wdio.conf.ts"
     ],
-    "compileOnSave": true
 }
