@@ -9,13 +9,8 @@ dist/
 allure-results/
 Allure-report/
 logs/
-dockerlogs/
 package-lock.json
-ui/resources/apk/*.apk
-.hyperexecute/*
-.updatedhyperexecute.yaml
-notifications/*
-tokens/*
+errorShots/
 
 # Compiled Java class files
 *.class
