@@ -119,4 +119,48 @@ export class BaseActions {
             throw err;
         }
     }
+
+    /**
+     * Perform a swipe (scroll) action to find an element within a specified number of attempts.
+     * @param {string | WebdriverIO.Element} element - The element to find, either as a selector string or a WebdriverIO element. 
+     * @param {number} maxScrollAttempts - The maximum number of scroll attempts. 
+     * @param {number} [timeout=30000] - The timeout for waiting for the element to be displayed (in milliseconds).
+     * @returns {Promise<void>} - A Promise that resolves when the element is found or the maximum attempts are reached. 
+     */
+    async swipe(element: string | WebdriverIO.Element, maxScrollAttempts: number = 5, timeout?: number): Promise<void> {
+        const actualTimeout: number = timeout ?? 30000;
+        let elementFound: boolean = false;
+
+        try {
+            if (typeof element === 'string') {
+                element = await $(element);
+            }
+
+            for (let attempt = 0; attempt < maxScrollAttempts; attempt++) {
+                console.log(`Attempt ${attempt} of ${maxScrollAttempts}`);
+                if (await element.isDisplayed()) {
+                    elementFound = true;
+                    break;
+                }
+
+                const startX = 500;
+                const startY = 800;
+                const endY = 200;
+
+                await driver.touchAction([
+                    { action: 'press', x: startX, y: startY },
+                    { action: 'wait', ms: 500 },
+                    { action: 'moveTo', x: startX, y: endY },
+                    { action: 'release' }
+                ]);
+            }
+
+            if (!elementFound) {
+                console.warn(`Element not found after ${maxScrollAttempts} swipe attempts.`);
+            }
+        } catch (err) {
+            console.error(`Error performing swipe: \n${err.message}`);
+            throw err;
+        }
+    }
 }

@@ -35,7 +35,7 @@ describe('Add item to cart', () => {
         await myCartScreen.clickProceedToCheckoutButton();
         await checkoutScreen.enterShippingAddressDetails(shippingAddressDetails);
         await checkoutScreen.clickToPaymentButton();
-        await checkoutScreen.entercardDetails(cardDetails);
+        await checkoutScreen.enterCardDetails(cardDetails);
         await checkoutScreen.clickReviewOrderButton();
         await checkoutScreen.clickPlaceOrderButton();
         await checkoutScreen.clickContinueShoppingButton();

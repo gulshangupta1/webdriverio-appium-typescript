@@ -7,7 +7,7 @@ describe('Press and Hold Gestures', () => {
         // Terminate and Launch the driver again
         await driver.terminateApp("com.saucelabs.mydemoapp.rn");
         await driver.activateApp("com.saucelabs.mydemoapp.rn");
-    })
+    });
 
     it('should perform a press and hold gesture on a mobile element', async () => {
         await homeScreen.pressHoldFirstItem();
