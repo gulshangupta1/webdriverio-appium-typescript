@@ -1,50 +1,40 @@
-import { HamburgerMenuScreen } from "./hamburgerMenuScreen";
-import { HomeScreen } from "./homeScreen";
+import { BaseActions } from "../../utilities/baseActions";
 
-export class LoginScreen {
-    homeScreen: HomeScreen;
-    hamburgerMenuScreen: HamburgerMenuScreen;
 
-    constructor() {
-        this.homeScreen = new HomeScreen();
-        this.hamburgerMenuScreen = new HamburgerMenuScreen();
-    }
+const platform = process.env.PLATFORM;
 
+export class LoginScreen extends BaseActions {
     private locators = {
-        userNameInputField: '~Username input field',
-        passwordInputField: '~Password input field',
-        loginButton: '~Login button',
-    }
+        userNameInputField: platform === 'ANDROID' ?
+            '~Username input field' :
+            "",
+        passwordInputField: platform === 'ANDROID' ?
+            '~Password input field' :
+            "",
+        loginButton: platform === 'ANDROID' ?
+            '~Login button' :
+            ""
+    };
 
-    public async getUserNameInputFieldEle(): Promise<WebdriverIO.Element> {
-        return await $(this.locators.userNameInputField);
-    }
-
-    public async getPasswordInputFieldEle(): Promise<WebdriverIO.Element> {
-        return await $(this.locators.passwordInputField);
-    }
-
-    public async getLoginButtonEle(): Promise<WebdriverIO.Element> {
+    async getLoginButtonEle() {
         return await $(this.locators.loginButton);
     }
 
-    public async login(username: string, password: string) {
-        console.log('Trying to login');
-        await (await this.homeScreen.getHamburgerMenuIconEle()).click();
-        const menuItemLoginEle = await this.hamburgerMenuScreen.getMenuItemLoginEle();
-        await menuItemLoginEle.waitForDisplayed();
-        await menuItemLoginEle.click();
+    async enterUsername(userName: string) {
         const userNameInputFieldEle = await $(this.locators.userNameInputField);
         await userNameInputFieldEle.waitForDisplayed();
-        await userNameInputFieldEle.setValue(username);
+        await userNameInputFieldEle.setValue(userName);
+    }
+
+    async enterPassword(password: string) {
         const passwordInputFieldEle = await $(this.locators.passwordInputField);
         await passwordInputFieldEle.waitForDisplayed();
         await passwordInputFieldEle.setValue(password);
-        await driver.hideKeyboard();
-        const loginButtonEle = await $(this.locators.loginButton);
-        await loginButtonEle.click();
+    }
 
-        await (await this.homeScreen.getProductTextOnHomeScreenEle()).waitForDisplayed();
-        console.log('Login successfully');
+    async clickLoginButton() {
+        const loginButtonEle = await $(this.locators.loginButton);
+        await loginButtonEle.waitForDisplayed();
+        await loginButtonEle.click();
     }
 }

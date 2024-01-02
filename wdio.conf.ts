@@ -8,8 +8,7 @@ const ANDROID_CAPABILITIES = [
         'appium:platformVersion': '13.0',
         'appium:automationName': 'UiAutomator2',
         'appium:udid': 'emulator-5554',
-        'appium:app': `${process.cwd()}/app/android_sauce_lab_app.apk`,
-        'appium:chromedriverExecutable': `${process.cwd()}/app/chromedriver`
+        'appium:app': `${process.cwd()}/app/android/android_sauce_lab_app.apk`,
     },
 ];
 
@@ -20,7 +19,7 @@ const IOS_CAPABILITIES = [
         'appium:automationName': 'XCUITest',
         'appium:udid': '86E68CFA-349F-45F1-84D2-1956419487EE',
         'appium:platformVersion': '17.0',
-        'appium:app': `${process.cwd()}/app/ios_sauce_app.app`
+        'appium:app': `${process.cwd()}/app/ios/ios_sauce_app.app`
     },
 ];
 
@@ -57,7 +56,8 @@ export const config: Options.Testrunner = {
     // will be called from there.
     //
     specs: [
-        './test/specs/**/*.test.ts'
+        // './test/specs/**/*.test.ts'
+        './test/specs/addItem.test.ts'
     ],
     // Patterns to exclude.
     exclude: [
@@ -85,17 +85,7 @@ export const config: Options.Testrunner = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-
-    capabilities: [{
-        platformName: 'Android',
-        'appium:deviceName': 'Pixel_6_Pro',
-        'appium:platformVersion': '13.0',
-        'appium:automationName': 'UiAutomator2',
-        'appium:udid': 'emulator-5554',
-        'appium:app': `${process.cwd()}/app/android/android_sauce_lab_app.apk`,
-    }],
-    // capabilities: process.env.PLATFORM === "ANDROID" ? ANDROID_CAPABILITIES : IOS_CAPABILITIES,
-
+    capabilities: process.env.PLATFORM === "ANDROID" ? ANDROID_CAPABILITIES : IOS_CAPABILITIES,
     //
     // ===================
     // Test Configurations

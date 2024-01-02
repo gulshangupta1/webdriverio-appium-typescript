@@ -1,14 +1,26 @@
-export class HamburgerMenuScreen {
+import { BaseActions } from "../../utilities/baseActions";
+
+const platform = process.env.PLATFORM;
+
+export class HamburgerMenuScreen extends BaseActions {
     private locators = {
-        menuItemLogin: '~menu item log in',
-        menuItemLogOut: '~menu item log out',
+        menuItemLogin: platform === "ANDROID" ?
+            "~menu item log in" :
+            "",
+        menuItemLogOut: platform === "ANDROID" ?
+            "~menu item log out" :
+            ""
+    };
+
+    async clickMenuItemLogin() {
+        const menuItemLoginEle = await $(this.locators.menuItemLogin);
+        await menuItemLoginEle.waitForDisplayed();
+        await menuItemLoginEle.click();
     }
 
-    public async getMenuItemLoginEle(): Promise<WebdriverIO.Element> {
-        return await $(this.locators.menuItemLogin);
-    }
-
-    public async getMenuItemLogOutEle(): Promise<WebdriverIO.Element> {
-        return await $(this.locators.menuItemLogOut);
+    async clickMenuItemLogout() {
+        const menuItemLogOutEle = await $(this.locators.menuItemLogOut);
+        await menuItemLogOutEle.waitForDisplayed();
+        await menuItemLogOutEle.click();
     }
 }
