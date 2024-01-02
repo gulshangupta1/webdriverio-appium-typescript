@@ -34,30 +34,37 @@ export class HomeScreen extends BaseActions {
 
     async clickHamburgerMenuButton() {
         const hamburgerMenuIconEle = await $(this.locators.hamburgerMenuIcon);
-        await hamburgerMenuIconEle.waitForDisplayed();
         await hamburgerMenuIconEle.click();
     }
 
     async clickFirstItem() {
         const firstItemEle = await $(this.locators.firstItem);
-        await firstItemEle.waitForDisplayed();
         await firstItemEle.click();
     }
 
     async clickAddToCartButton() {
         const addToCartButtonEle = await $(this.locators.addToCartButton);
-        await addToCartButtonEle.waitForDisplayed();
         await addToCartButtonEle.click();
     }
 
     async clickCartIcon() {
         const cartIconEle = await $(this.locators.cartIcon);
-        await cartIconEle.waitForDisplayed();
         await cartIconEle.click();
     }
 
     async tapOnFirstItem() {
         await this.tap(this.locators.firstItem);
+        await (await $(this.locators.addToCartButton)).waitForDisplayed();
+    }
+
+    async pressHoldFirstItem() {
+        const firstItemEle = await $(this.locators.firstItem)
+        await this.pressAndHold(firstItemEle, 5000);
+    }
+
+    async PressHoldOffsetFirstItem() {
+        const firstItemEle = await $(this.locators.firstItem);
+        await this.pressAndHoldAtOffset(firstItemEle, 100, 100, 5000);
     }
 
     async login(username: string, password: string) {

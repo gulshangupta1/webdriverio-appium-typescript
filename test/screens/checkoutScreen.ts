@@ -1,4 +1,6 @@
 import { BaseActions } from "../../utilities/baseActions";
+import { CardDetails } from "../resources/cardDetails";
+import { ShippingAddressDetails } from "../resources/shippingAddressDetails";
 
 const platform = process.env.PLATFORM;
 
@@ -79,9 +81,9 @@ export class CheckoutScreen extends BaseActions {
         await stateInputFieldEle.setValue(stateName);
     }
 
-    async enterZipCode(zipCode: string) {
+    async enterZipCode(zipCode: number) {
         const zipCodeInputFieldEle = await $(this.locators.zipCodeInputField);
-        await zipCodeInputFieldEle.setValue(zipCode);
+        await zipCodeInputFieldEle.setValue(zipCode.toString());
     }
 
     async enterCountry(countryName: string) {
@@ -104,9 +106,9 @@ export class CheckoutScreen extends BaseActions {
         await expirationDateInputFieldEle.setValue(expirationDate);
     }
 
-    async enterSecurityCode(securityCode: string) {
+    async enterSecurityCode(securityCode: number) {
         const securityCodeInputFieldEle = await $(this.locators.securityCodeInputField);
-        await securityCodeInputFieldEle.setValue(securityCode);
+        await securityCodeInputFieldEle.setValue(securityCode.toString());
     }
 
     async clickReviewOrderButton() {
@@ -125,22 +127,22 @@ export class CheckoutScreen extends BaseActions {
         await continueShoppingButtonEle.click()
     }
 
-    async enterShippingAddressDetails(fullName: string, addressLine1: string, addressLine2: string, cityName: string, stateName: string, zipCode: string, countryName: string) {
-        await this.enterFullName(fullName);
-        await this.enterAddressLine1(addressLine1);
-        await this.enterAddressLine2(addressLine2);
-        await this.enterCity(cityName);
-        await this.enterState(stateName);
-        await this.enterZipCode(zipCode);
-        await this.enterCountry(countryName);
+    async enterShippingAddressDetails(shippingAddressDetails: ShippingAddressDetails) {
+        await this.enterFullName(shippingAddressDetails.fullName);
+        await this.enterAddressLine1(shippingAddressDetails.addressLine1);
+        await this.enterAddressLine2(shippingAddressDetails.addressLine2);
+        await this.enterCity(shippingAddressDetails.cityName);
+        await this.enterState(shippingAddressDetails.stateName);
+        await this.enterZipCode(shippingAddressDetails.zipCode);
+        await this.enterCountry(shippingAddressDetails.countryName);
         await driver.hideKeyboard();
     }
 
-    async entercartDetails(fullName: string, cardNumber: string, expirationDate: string, securityCode: string) {
-        await this.enterFullName(fullName);
-        await this.enterCardNumber(cardNumber);
-        await this.enterExpirationDate(expirationDate);
-        await this.enterSecurityCode(securityCode);
+    async entercardDetails(cardDetails: CardDetails) {
+        await this.enterFullName(cardDetails.fullName);
+        await this.enterCardNumber(cardDetails.cardNumber);
+        await this.enterExpirationDate(cardDetails.expirationDate);
+        await this.enterSecurityCode(cardDetails.securityCode);
         await driver.hideKeyboard();
     }
 }
