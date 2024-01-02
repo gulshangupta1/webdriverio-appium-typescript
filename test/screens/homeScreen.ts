@@ -22,6 +22,9 @@ export class HomeScreen extends BaseActions {
         cartIcon: platform === "ANDROID" ?
             "~cart badge" :
             "",
+        footer: platform === "ANDROID" ?
+            "//android.widget.TextView[@text='© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']/parent::android.view.ViewGroup" :
+            ""
     };
 
     async getProductTextOnHomeScreen() {
@@ -30,6 +33,10 @@ export class HomeScreen extends BaseActions {
 
     async getFirstItemEle() {
         return await $(this.locators.firstItem);
+    }
+
+    async getFooterEle() {
+        return await $(this.locators.footer);
     }
 
     async clickHamburgerMenuButton() {

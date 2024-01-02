@@ -138,7 +138,7 @@ export class CheckoutScreen extends BaseActions {
         await driver.hideKeyboard();
     }
 
-    async entercardDetails(cardDetails: CardDetails) {
+    async enterCardDetails(cardDetails: CardDetails) {
         await this.enterFullName(cardDetails.fullName);
         await this.enterCardNumber(cardDetails.cardNumber);
         await this.enterExpirationDate(cardDetails.expirationDate);
