@@ -30,4 +30,9 @@ describe('Swipe Gestures', () => {
         const footerEle = await homeScreen.getFooterEle();
         await baseActions.swipe(footerEle);
     });
+
+    it('Should scroll until an element is visible on a mobile app (Swipe Gestures Based on Screen Percentages)', async () => {
+        await (await homeScreen.getFirstItemEle()).waitForDisplayed();
+        await baseActions.swipeByPercentage(await homeScreen.getFooterEle(), 30, 70);
+    });
 });
