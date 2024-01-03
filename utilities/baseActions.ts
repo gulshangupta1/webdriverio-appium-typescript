@@ -21,7 +21,7 @@ export class BaseActions {
                 }
             ]);
         } catch (err) {
-            console.error(`Error tapping on element: ${element}\n${err.stack}`);
+            console.error(`Error tapping on element: ${element}: \n${err.stack}`);
             throw err;
         }
     }
@@ -55,7 +55,7 @@ export class BaseActions {
                 }
             ]);
         } catch (err) {
-            console.error(`Error tapping on element (${element}) with offset (${offsetX}, ${offsetY})\n${err.stack}`);
+            console.error(`Error tapping on element (${element}) with offset (${offsetX}, ${offsetY}): \n${err.stack}`);
             throw err;
         }
     }
@@ -82,7 +82,7 @@ export class BaseActions {
                 { action: 'release' }
             ]);
         } catch (err) {
-            console.error(`Error performing press and hold on element (${element})\n${err.message}`)
+            console.error(`Error performing press and hold on element (${element}): \n${err.stack}`)
             throw err;
         }
     }
@@ -115,7 +115,7 @@ export class BaseActions {
                 { action: 'release' }
             ]);
         } catch (err) {
-            console.error(`Error performing press and hold on element (${element}) with offset (${offsetX}, ${offsetY})\n${err.message}`)
+            console.error(`Error performing press and hold on element (${element}) with offset (${offsetX}, ${offsetY}): \n${err.stack}`)
             throw err;
         }
     }
@@ -127,8 +127,7 @@ export class BaseActions {
      * @param {number} [timeout=30000] - The timeout for waiting for the element to be displayed (in milliseconds).
      * @returns {Promise<void>} - A Promise that resolves when the element is found or the maximum attempts are reached. 
      */
-    async swipe(element: string | WebdriverIO.Element, maxScrollAttempts: number = 5, timeout?: number): Promise<void> {
-        const actualTimeout: number = timeout ?? 30000;
+    async swipe(element: string | WebdriverIO.Element, maxScrollAttempts: number = 5): Promise<void> {
         let elementFound: boolean = false;
 
         try {
@@ -159,7 +158,48 @@ export class BaseActions {
                 console.warn(`Element not found after ${maxScrollAttempts} swipe attempts.`);
             }
         } catch (err) {
-            console.error(`Error performing swipe: \n${err.message}`);
+            console.error(`Error performing swipe: \n${err.stack}`);
+            throw err;
+        }
+    }
+
+    /**
+     * Perform a horizontal swipe action to find an element within a specified number of attempts.
+     * @param {string | WebdriverIO.Element} element - The element to find, either as a selector string or a WebdriverIO element. 
+     * @param {number} maxScrollAttempts - The maximum number of scroll attempts. 
+     * @param {number} [timeout=30000] - The timeout for waiting for the element to be displayed (in milliseconds).
+     * @returns {Promise<void>} - A Promise that resolves when the element is found or the maximum attempts are reached. 
+     */
+    async horizontalSwipe(element: string | WebdriverIO.Element, maxScrollAttempts: number = 5): Promise<void> {
+        let elementFound: boolean = false;
+
+        try {
+            if (typeof element === 'string') {
+                element = await $(element);
+            }
+
+            for (let attempt = 0; attempt < maxScrollAttempts; attempt++) {
+                if (await element.isDisplayed()) {
+                    elementFound = true;
+                    break;
+                }
+
+                const startX = 200;
+                const endX = 800;
+                const startY = 500;
+
+                await driver.touchAction([
+                    { action: 'press', x: endX, y: startY },
+                    { action: 'wait', ms: 500 },
+                    { action: 'moveTo', x: startX, y: startY },
+                    { action: 'release' }
+                ]);
+            }
+            if (!elementFound) {
+                console.warn(`Element not found after ${maxScrollAttempts} horizontal swipes.`);
+            }
+        } catch (err) {
+            console.error(`Error performing horizontal swipe: \n${err.stack}`);
             throw err;
         }
     }
