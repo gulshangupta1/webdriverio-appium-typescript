@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs";
 
 const ANDROID_CAPABILITIES = [
     {
@@ -8,7 +8,7 @@ const ANDROID_CAPABILITIES = [
         'appium:automationName': 'UiAutomator2',
         'appium:udid': 'emulator-5554',
         'appium:app': `${process.cwd()}/app/android/android_sauce_lab_app.apk`,
-        // 'appium:chromedriverExecutable': `${process.cwd()}/app/chromedriver`
+        'appium:chromedriverExecutable': `${process.cwd()}/app/chromedriver`
     },
 ];
 

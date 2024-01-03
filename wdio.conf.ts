@@ -9,6 +9,7 @@ const ANDROID_CAPABILITIES = [
         'appium:automationName': 'UiAutomator2',
         'appium:udid': 'emulator-5554',
         'appium:app': `${process.cwd()}/app/android/android_sauce_lab_app.apk`,
+        'appium:chromedriverExecutable': `${process.cwd()}/app/chromedriver`
     },
 ];
 
@@ -57,7 +58,7 @@ export const config: Options.Testrunner = {
     //
     specs: [
         // './test/specs/**/*.test.ts'
-        './test/specs/addItem.test.ts'
+        './test/specs/switchContext.test.ts'
     ],
     // Patterns to exclude.
     exclude: [

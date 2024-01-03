@@ -9,6 +9,9 @@ export class HamburgerMenuScreen extends BaseActions {
             "",
         menuItemLogOut: platform === "ANDROID" ?
             "~menu item log out" :
+            "",
+        menuItemWebview: platform === "ANDROID" ?
+            "~menu item webview" :
             ""
     };
 
@@ -22,5 +25,11 @@ export class HamburgerMenuScreen extends BaseActions {
         const menuItemLogOutEle = await $(this.locators.menuItemLogOut);
         await menuItemLogOutEle.waitForDisplayed();
         await menuItemLogOutEle.click();
+    }
+
+    async clickMenuItemWebview() {
+        const menuItemWebviewEle = await $(this.locators.menuItemWebview);
+        await menuItemWebviewEle.waitForDisplayed();
+        await menuItemWebviewEle.click();
     }
 }
