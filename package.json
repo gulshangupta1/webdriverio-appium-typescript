@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "wdio": "wdio run ./wdio.conf.ts",
-    "android": "PLATFORM=ANDROID npx wdio run config/wdio.android.config.js --spec test/specs/addItem.test.ts",
-    "ios": "PLATFORM=IOS npx wdio run config/wdio.ios.config.js --spec",
-    "android:chrome:browser": "PLATFORM=ANDROID npx wdio run config/wdio.chromebrowser.config.js --spec"
+    "android": "PLATFORM=ANDROID npx wdio run config/wdio.android.config.ts --spec test/specs/swipeGestures.test.ts",
+    "ios": "PLATFORM=IOS npx wdio run config/wdio.ios.config.ts --spec ",
+    "android:chrome:browser": "PLATFORM=ANDROID npx wdio run config/wdio.chromebrowser.config.ts --spec"
   },
   "keywords": [],
   "author": "Gulshan",
