@@ -25,10 +25,13 @@
         "noFallthroughCasesInSwitch": true,
         "noEmitOnError": true,
         "outDir": "./dist",
+        "esModuleInterop": true
     },
+    "compileOnSave": true,
     "include": [
+        "config",
         "test",
+        "utilities",
         "wdio.conf.ts",
-        "utilities"
     ]
 }

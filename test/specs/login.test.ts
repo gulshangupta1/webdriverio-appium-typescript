@@ -1,12 +1,20 @@
+import { FileUtils } from "../../utilities/fileUtils";
+import { LoggerHelper, LOGGER } from "../../utilities/reporting/loggerHelper";
+import { LoginDetails } from "../resources/customTypes/loginDetails";
 import { HomeScreen } from "../screens/homeScreen";
+import * as loginDetailsJson from "./../resources/testdata/loginDetails.json";
+
+const specName = 'Test login scenarios';
+LoggerHelper.setupLogger(specName);
 
 describe('Test login scenarios', () => {
     it('Login Test', async () => {
+        const loginDetails: LoginDetails = FileUtils.convertJsonToCustomType(loginDetailsJson);
         const homeScreen: HomeScreen = new HomeScreen();
-        const username: string = 'bob@example.com';
-        const password: string = '10203040';
 
-        await homeScreen.login(username, password);
+        LOGGER.info('Trying to login');
+        await homeScreen.login(loginDetails.username, loginDetails.password);
+        LOGGER.info('Login successful');
         await (await homeScreen.getProductTextOnHomeScreen()).isDisplayed();
     });
 });
