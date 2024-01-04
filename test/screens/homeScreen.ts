@@ -27,16 +27,20 @@ export class HomeScreen extends BaseActions {
             ""
     };
 
-    async getProductTextOnHomeScreen() {
+    async getProductTextOnHomeScreen(): Promise<WebdriverIO.Element> {
         return await $(this.locators.productTextOnHomeScreen);
     }
 
-    async getFirstItemEle() {
+    async getFirstItemEle(): Promise<WebdriverIO.Element> {
         return await $(this.locators.firstItem);
     }
 
-    async getFooterEle() {
+    async getFooterEle(): Promise<WebdriverIO.Element> {
         return await $(this.locators.footer);
+    }
+
+    async getHamburgerMenuIconEle(): Promise<WebdriverIO.Element> {
+        return await $(this.locators.hamburgerMenuIcon);
     }
 
     async clickHamburgerMenuButton() {

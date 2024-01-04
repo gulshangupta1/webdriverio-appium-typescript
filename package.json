@@ -17,6 +17,7 @@
     "@wdio/cli": "^8.27.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.11",
     "@wdio/allure-reporter": "^8.27.0",
     "@wdio/appium-service": "^8.27.0",
     "@wdio/globals": "^8.27.0",
