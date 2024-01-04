@@ -58,7 +58,7 @@ export const config: Options.Testrunner = {
     //
     specs: [
         // './test/specs/**/*.test.ts'
-        './test/specs/switchContext.test.ts'
+        './test/specs/chaiAssertions.test.ts'
     ],
     // Patterns to exclude.
     exclude: [
@@ -277,6 +277,7 @@ export const config: Options.Testrunner = {
             fs.mkdirSync("./errorShots");
         }
         if (!passed) {
+            console.log('Taking screenshot...');
             await driver.saveScreenshot(`./errorShots/${test.title.replaceAll(" ", "_")}.png`);
         }
     },

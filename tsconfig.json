@@ -24,7 +24,7 @@
         "noUnusedParameters": false,
         "noFallthroughCasesInSwitch": true,
         "noEmitOnError": true,
-        "outDir": "./dist"
+        "outDir": "./dist",
     },
     "include": [
         "test",
