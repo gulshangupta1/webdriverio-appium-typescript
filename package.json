@@ -14,7 +14,8 @@
   "author": "Gulshan",
   "license": "ISC",
   "dependencies": {
-    "@wdio/cli": "^8.27.0"
+    "@wdio/cli": "^8.27.0",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
     "@types/chai": "^4.3.11",
