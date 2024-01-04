@@ -1,6 +1,6 @@
 import { BaseActions } from "../../utilities/baseActions";
-import { CardDetails } from "../resources/cardDetails";
-import { ShippingAddressDetails } from "../resources/shippingAddressDetails";
+import { CardDetails } from "../resources/customTypes/cardDetails";
+import { ShippingAddressDetails } from "../resources/customTypes/shippingAddressDetails";
 
 const platform = process.env.PLATFORM;
 
