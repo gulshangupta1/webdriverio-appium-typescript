@@ -1,7 +1,4 @@
 import { BaseActions } from "../../utilities/baseActions";
-import { HamburgerMenuScreen } from "./hamburgerMenuScreen";
-import { HomeScreen } from "./homeScreen";
-import { LoginScreen } from "./loginScreen";
 
 const platform = process.env.PLATFORM;
 

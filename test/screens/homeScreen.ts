@@ -1,3 +1,4 @@
+import { LOGGER } from '../../utilities/reporting/loggerHelper';
 import { BaseActions } from './../../utilities/baseActions';
 import { HamburgerMenuScreen } from './hamburgerMenuScreen';
 import { LoginScreen } from './loginScreen';
@@ -6,6 +7,15 @@ import { LogoutScreen } from './logoutScreen';
 const platform = process.env.PLATFORM;
 
 export class HomeScreen extends BaseActions {
+    hamburgerMenuScreen: HamburgerMenuScreen;
+    logoutScreen: LogoutScreen;
+
+    constructor() {
+        super();
+        this.hamburgerMenuScreen = new HamburgerMenuScreen();
+        this.logoutScreen = new LogoutScreen();
+    }
+
     private locators = {
         hamburgerMenuIcon: platform === 'ANDROID' ?
             "~open menu" :
@@ -79,23 +89,34 @@ export class HomeScreen extends BaseActions {
     }
 
     async login(username: string, password: string) {
-        const hamburgerMenuScreen: HamburgerMenuScreen = new HamburgerMenuScreen();
-        const loginScreen: LoginScreen = new LoginScreen();
+        LOGGER.info(`Trying to login with username: ${username}`);
 
-        await this.clickHamburgerMenuButton();
-        await hamburgerMenuScreen.clickMenuItemLogin();
-        await loginScreen.enterUsername(username);
-        await loginScreen.enterPassword(password);
-        await loginScreen.clickLoginButton();
+        const loginScreen: LoginScreen = new LoginScreen();
+        try {
+            await this.clickHamburgerMenuButton();
+            await this.hamburgerMenuScreen.clickMenuItemLogin();
+            await loginScreen.enterUsername(username);
+            await loginScreen.enterPassword(password);
+            await loginScreen.clickLoginButton();
+            LOGGER.info('Login successfull');
+        } catch (err) {
+            LOGGER.error(`Error while login with user: ${username}`);
+            throw err;
+        }
     }
 
     async logout() {
-        const hamburgerMenuIcon = new HamburgerMenuScreen();
-        const logoutScreen: LogoutScreen = new LogoutScreen();
+        LOGGER.info('Tyring to logout');
+        try {
+            await this.clickHamburgerMenuButton();
+            await this.hamburgerMenuScreen.clickMenuItemLogout();
+            await this.logoutScreen.clickLogoutButton();
+            await this.logoutScreen.clickOkButton();
+            LOGGER.info('User logged out');
+        } catch (errr) {
+            LOGGER.error('Error while trying to log out.');
+            throw errr;
+        }
 
-        await this.clickHamburgerMenuButton();
-        await hamburgerMenuIcon.clickMenuItemLogout();
-        await logoutScreen.clickLogoutButton();
-        await logoutScreen.clickOkButton();
     }
 }

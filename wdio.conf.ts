@@ -57,8 +57,7 @@ export const config: Options.Testrunner = {
     // will be called from there.
     //
     specs: [
-        // './test/specs/**/*.test.ts'
-        './test/specs/chaiAssertions.test.ts'
+        './test/specs/**/*.test.ts'
     ],
     // Patterns to exclude.
     exclude: [
@@ -161,6 +160,7 @@ export const config: Options.Testrunner = {
         outputDir: 'allure-results',
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
+        disableMochaHooks: true
     }]],
 
     // Options to be passed to Mocha.
@@ -225,6 +225,7 @@ export const config: Options.Testrunner = {
      * @param {object}         browser      instance of created browser/device session
      */
     before: function (capabilities, specs) {
+        // LoggerHelper.setupLogger();
         console.log('Executing before hook');
     },
     /**

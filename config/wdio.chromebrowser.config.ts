@@ -12,7 +12,7 @@ const ANDROID_CAPABILITIES = [
 exports.config = {
     runner: "local",
     port: 4723,
-    specs: [`${process.cwd()}/test/specs/**/*.ts`],
+    specs: [`${process.cwd()}/test/specs/**/*.test.ts`],
     capabilities: ANDROID_CAPABILITIES,
     logLevel: "info",
     waitforTimeout: 10000,

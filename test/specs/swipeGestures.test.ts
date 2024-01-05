@@ -1,10 +1,18 @@
 import { HomeScreen } from "../screens/homeScreen";
 import { BaseActions } from "../../utilities/baseActions";
+import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 
-const homeScreen: HomeScreen = new HomeScreen();
-const baseActions: BaseActions = new BaseActions();
+let homeScreen: HomeScreen;
+let baseActions: BaseActions;
 
+const specName: string = 'Swipe Gestures Tests'
 describe('Swipe Gestures', () => {
+    before(async () => {
+        LoggerHelper.setupLogger(specName);
+        homeScreen = new HomeScreen();
+        baseActions = new BaseActions();
+    });
+
     afterEach(async () => {
         // Terminate and Launch the driver again
         await driver.terminateApp("com.saucelabs.mydemoapp.rn");

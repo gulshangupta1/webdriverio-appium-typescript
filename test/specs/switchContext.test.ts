@@ -1,14 +1,24 @@
+import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 import { SwitchContextUtils } from "../../utilities/switchContextUtils";
 import { HamburgerMenuScreen } from "../screens/hamburgerMenuScreen";
 import { HomeScreen } from "../screens/homeScreen";
 import { WebviewScreen } from "../screens/webviewScreen";
 
-const homeScreen: HomeScreen = new HomeScreen();
-const hamburgerMenuScreen: HamburgerMenuScreen = new HamburgerMenuScreen();
-const webviewScreen: WebviewScreen = new WebviewScreen();
-const switchContextUtils: SwitchContextUtils = new SwitchContextUtils();
+let homeScreen: HomeScreen;
+let hamburgerMenuScreen: HamburgerMenuScreen;
+let webviewScreen: WebviewScreen;
+let switchContextUtils: SwitchContextUtils;
 
+const specName: string = 'Switching Between Contexts Tests';
 describe('Switching Between Native and Web Views', () => {
+    before(async () => {
+        LoggerHelper.setupLogger(specName);
+        homeScreen = new HomeScreen();
+        hamburgerMenuScreen = new HamburgerMenuScreen();
+        webviewScreen = new WebviewScreen();
+        switchContextUtils = new SwitchContextUtils();
+    });
+
     afterEach(async () => {
         // Terminate and Launch the driver again
         await driver.terminateApp("com.saucelabs.mydemoapp.rn");
