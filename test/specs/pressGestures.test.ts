@@ -1,8 +1,15 @@
+import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 import { HomeScreen } from "../screens/homeScreen";
 
-const homeScreen = new HomeScreen();
+let homeScreen: HomeScreen;
 
+const specName: string = 'Press And Hold Gestures Tests';
 describe('Press and Hold Gestures', () => {
+    before(async () => {
+        LoggerHelper.setupLogger(specName);
+        homeScreen = new HomeScreen();
+    });
+
     afterEach(async () => {
         // Terminate and Launch the driver again
         await driver.terminateApp("com.saucelabs.mydemoapp.rn");

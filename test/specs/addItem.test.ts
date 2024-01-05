@@ -8,12 +8,21 @@ import * as loginDetailsJson from "./../resources/testdata/loginDetails.json";
 import * as shippingAddressDetailsJson from "./../resources/testdata/shippingAddressDetails.json";
 import * as cardDetailsJson from "./../resources/testdata/cardDetails.json";
 import { LoginDetails } from "../resources/customTypes/loginDetails";
+import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 
-const homeScreen = new HomeScreen();
-const myCartScreen = new MyCartScreen();
-const checkoutScreen = new CheckoutScreen();
+let homeScreen: HomeScreen;
+let myCartScreen: MyCartScreen;
+let checkoutScreen: CheckoutScreen;
 
+const specName: string = 'Add item to cart tests';
 describe('Add item to cart', () => {
+    before(async () => {
+        LoggerHelper.setupLogger(specName)
+        homeScreen = new HomeScreen();
+        myCartScreen = new MyCartScreen();
+        checkoutScreen = new CheckoutScreen();
+    });
+
     it('Add first item to cart', async () => {
         const loginDetails: LoginDetails = FileUtils.convertJsonToCustomType(loginDetailsJson);
         const shippingAddressDetails: ShippingAddressDetails = FileUtils.convertJsonToCustomType(shippingAddressDetailsJson);

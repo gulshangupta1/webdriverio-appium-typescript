@@ -1,4 +1,7 @@
+import { LOGGER } from "./reporting/loggerHelper";
+
 export class BaseActions {
+
     /**
      * Perform a tap action on the specified element.
      * 
@@ -22,7 +25,7 @@ export class BaseActions {
                 }
             ]);
         } catch (err) {
-            console.error(`Error tapping on element: ${element}: \n${err.stack}`);
+            LOGGER.error(`Error tapping on element: ${element}: \n${err.stack}`);
             throw err;
         }
     }
@@ -57,7 +60,7 @@ export class BaseActions {
                 }
             ]);
         } catch (err) {
-            console.error(`Error tapping on element (${element}) with offset (${offsetX}, ${offsetY}): \n${err.stack}`);
+            LOGGER.error(`Error tapping on element (${element}) with offset (${offsetX}, ${offsetY}): \n${err.stack}`);
             throw err;
         }
     }
@@ -85,7 +88,7 @@ export class BaseActions {
                 { action: 'release' }
             ]);
         } catch (err) {
-            console.error(`Error performing press and hold on element (${element}): \n${err.stack}`)
+            LOGGER.error(`Error performing press and hold on element (${element}): \n${err.stack}`)
             throw err;
         }
     }
@@ -119,7 +122,7 @@ export class BaseActions {
                 { action: 'release' }
             ]);
         } catch (err) {
-            console.error(`Error performing press and hold on element (${element}) with offset (${offsetX}, ${offsetY}): \n${err.stack}`)
+            LOGGER.error(`Error performing press and hold on element (${element}) with offset (${offsetX}, ${offsetY}): \n${err.stack}`)
             throw err;
         }
     }
@@ -141,7 +144,7 @@ export class BaseActions {
             }
 
             for (let attempt = 0; attempt < maxScrollAttempts; attempt++) {
-                console.log(`Attempt ${attempt} of ${maxScrollAttempts}`);
+                LOGGER.info(`Attempt ${attempt} of ${maxScrollAttempts}`);
                 if (await element.isDisplayed()) {
                     elementFound = true;
                     break;
@@ -160,12 +163,12 @@ export class BaseActions {
             }
 
             if (!elementFound) {
-                console.warn(`Element not found after ${maxScrollAttempts} swipe attempts.`);
+                LOGGER.warn(`Element not found after ${maxScrollAttempts} swipe attempts.`);
             }
 
             return elementFound;
         } catch (err) {
-            console.error(`Error performing swipe: \n${err.stack}`);
+            LOGGER.error(`Error performing swipe: \n${err.stack}`);
             throw err;
         }
     }
@@ -204,12 +207,12 @@ export class BaseActions {
                 ]);
             }
             if (!elementFound) {
-                console.warn(`Element not found after ${maxScrollAttempts} horizontal swipes.`);
+                LOGGER.warn(`Element not found after ${maxScrollAttempts} horizontal swipes.`);
             }
 
             return elementFound;
         } catch (err) {
-            console.error(`Error performing horizontal swipe: \n${err.stack}`);
+            LOGGER.error(`Error performing horizontal swipe: \n${err.stack}`);
             throw err;
         }
     }
@@ -253,12 +256,12 @@ export class BaseActions {
             }
 
             if (!elementFound) {
-                console.warn(`Element not found after ${maxScrollAttempts} swipe attempts.`);
+                LOGGER.warn(`Element not found after ${maxScrollAttempts} swipe attempts.`);
             }
 
             return elementFound;
         } catch (err) {
-            console.error(`Error during swipeByPercentage: ${err.stack}`);
+            LOGGER.error(`Error during swipeByPercentage: ${err.stack}`);
             throw err;
         }
     }
@@ -301,12 +304,12 @@ export class BaseActions {
             }
 
             if (!elementFound) {
-                console.warn(`Element not found after ${maxScrollAttempts} swipe attempts.`)
+                LOGGER.warn(`Element not found after ${maxScrollAttempts} swipe attempts.`)
             }
 
             return elementFound;
         } catch (err) {
-            console.error(`Error performing horizontal swipe: \n${err.stack}`);
+            LOGGER.error(`Error performing horizontal swipe: \n${err.stack}`);
             throw err;
         }
     }

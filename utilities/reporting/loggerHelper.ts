@@ -15,7 +15,7 @@ export namespace LoggerHelper {
             }
 
             if (!(specName === undefined || specName === '' || specName === null)) {
-                loggerFileName = `${specName.replace(/[^\w\d]/gi, '_')}.log`;
+                loggerFileName = `${snakeCase(specName)}.log`;
             }
 
             // declare format of the logger
@@ -28,7 +28,7 @@ export namespace LoggerHelper {
 
             const logFilePath = path.join(reportFolderPath, loggerFileName);
             if (!existsSync(logFilePath)) {
-                writeFileSync(path.join(reportFolderPath, loggerFileName), '');
+                writeFileSync(logFilePath, '');
             }
 
             // initialize the logger
@@ -38,7 +38,7 @@ export namespace LoggerHelper {
                 format: myFormat,
                 transports: [
                     new winston.transports.File({
-                        filename: path.join(reportFolderPath, loggerFileName),
+                        filename: logFilePath,
                         level: 'info',
                         maxsize: 5120000,
                     }),
@@ -58,5 +58,13 @@ export namespace LoggerHelper {
             console.info('-----------------------------');
             throw new Error(error);
         }
+    }
+
+    export function camelCase(str: string): string {
+        return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
+    }
+
+    export function snakeCase(str: string): string {
+        return str.replace(/[^\w\d]/gi, '_').toLowerCase();
     }
 }

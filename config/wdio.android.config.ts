@@ -15,8 +15,9 @@ const ANDROID_CAPABILITIES = [
 exports.config = {
     runner: "local",
     port: 4723,
-    specs: [`${process.cwd()}/test/specs/**/*.js`],
+    specs: [`${process.cwd()}/test/specs/**/*.test.ts`],
     capabilities: ANDROID_CAPABILITIES,
+    maxInstances: 1,
     logLevel: "info",
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
@@ -31,6 +32,7 @@ exports.config = {
                 outputDir: "allure-results",
                 disableWebdriverStepsReporting: true,
                 disableWebdriverScreenshotsReporting: false,
+                disableMochaHooks: true
             },
         ],
     ],
@@ -46,4 +48,7 @@ exports.config = {
             await driver.saveScreenshot(`./errorShots/${test.title.replaceAll(" ", "_")}.png`);
         }
     },
+    // before: async function (capabilities, specs) {
+    //     LoggerHelper.setupLogger();
+    // },
 };
