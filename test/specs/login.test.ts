@@ -18,9 +18,7 @@ describe('Test login scenarios', () => {
         const loginDetails: LoginDetails = FileUtils.convertJsonToCustomType(loginDetailsJson);
         const homeScreen: HomeScreen = new HomeScreen();
 
-        LOGGER.info('Trying to login');
         await homeScreenUtils.login(loginDetails.username, loginDetails.password);
-        LOGGER.info('Login successful');
         await (await homeScreen.getProductTextOnHomeScreen()).isDisplayed();
     });
 });

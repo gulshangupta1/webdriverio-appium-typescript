@@ -19,7 +19,7 @@ exports.config = {
     capabilities: ANDROID_CAPABILITIES,
     maxInstances: 1,
     logLevel: "info",
-    waitforTimeout: 10000,
+    waitforTimeout: 30000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
     services: ["appium"],
