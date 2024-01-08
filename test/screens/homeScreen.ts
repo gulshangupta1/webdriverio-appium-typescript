@@ -7,15 +7,6 @@ import { LogoutScreen } from './logoutScreen';
 const platform = process.env.PLATFORM;
 
 export class HomeScreen extends BaseActions {
-    hamburgerMenuScreen: HamburgerMenuScreen;
-    logoutScreen: LogoutScreen;
-
-    constructor() {
-        super();
-        this.hamburgerMenuScreen = new HamburgerMenuScreen();
-        this.logoutScreen = new LogoutScreen();
-    }
-
     private locators = {
         hamburgerMenuIcon: platform === 'ANDROID' ?
             "~open menu" :
@@ -86,37 +77,5 @@ export class HomeScreen extends BaseActions {
     async PressHoldOffsetFirstItem() {
         const firstItemEle = await $(this.locators.firstItem);
         await this.pressAndHoldAtOffset(firstItemEle, 100, 100, 5000);
-    }
-
-    async login(username: string, password: string) {
-        LOGGER.info(`Trying to login with username: ${username}`);
-
-        const loginScreen: LoginScreen = new LoginScreen();
-        try {
-            await this.clickHamburgerMenuButton();
-            await this.hamburgerMenuScreen.clickMenuItemLogin();
-            await loginScreen.enterUsername(username);
-            await loginScreen.enterPassword(password);
-            await loginScreen.clickLoginButton();
-            LOGGER.info('Login successfull');
-        } catch (err) {
-            LOGGER.error(`Error while login with user: ${username}`);
-            throw err;
-        }
-    }
-
-    async logout() {
-        LOGGER.info('Tyring to logout');
-        try {
-            await this.clickHamburgerMenuButton();
-            await this.hamburgerMenuScreen.clickMenuItemLogout();
-            await this.logoutScreen.clickLogoutButton();
-            await this.logoutScreen.clickOkButton();
-            LOGGER.info('User logged out');
-        } catch (errr) {
-            LOGGER.error('Error while trying to log out.');
-            throw errr;
-        }
-
     }
 }

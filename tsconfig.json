@@ -28,10 +28,4 @@
         "esModuleInterop": true
     },
     "compileOnSave": true,
-    "include": [
-        "config",
-        "test",
-        "utilities",
-        "wdio.conf.ts",
-    ]
 }

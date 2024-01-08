@@ -9,10 +9,12 @@ import * as shippingAddressDetailsJson from "./../resources/testdata/shippingAdd
 import * as cardDetailsJson from "./../resources/testdata/cardDetails.json";
 import { LoginDetails } from "../resources/customTypes/loginDetails";
 import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
+import { HomeScreenUtils } from "../../commpnFunctions/homeScreenUtils";
 
 let homeScreen: HomeScreen;
 let myCartScreen: MyCartScreen;
 let checkoutScreen: CheckoutScreen;
+let homeScreenUtils: HomeScreenUtils;
 
 const specName: string = 'Add item to cart tests';
 describe('Add item to cart', () => {
@@ -21,6 +23,7 @@ describe('Add item to cart', () => {
         homeScreen = new HomeScreen();
         myCartScreen = new MyCartScreen();
         checkoutScreen = new CheckoutScreen();
+        homeScreenUtils = new HomeScreenUtils();
     });
 
     it('Add first item to cart', async () => {
@@ -28,7 +31,7 @@ describe('Add item to cart', () => {
         const shippingAddressDetails: ShippingAddressDetails = FileUtils.convertJsonToCustomType(shippingAddressDetailsJson);
         const cardDetails: CardDetails = FileUtils.convertJsonToCustomType(cardDetailsJson);
 
-        await homeScreen.login(loginDetails.username, loginDetails.password);
+        await homeScreenUtils.login(loginDetails.username, loginDetails.password);
         await homeScreen.tapOnFirstItem();
         await homeScreen.clickAddToCartButton();
         await homeScreen.clickCartIcon();
