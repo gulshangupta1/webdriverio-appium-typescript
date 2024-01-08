@@ -9,7 +9,7 @@ import * as shippingAddressDetailsJson from "./../resources/testdata/shippingAdd
 import * as cardDetailsJson from "./../resources/testdata/cardDetails.json";
 import { LoginDetails } from "../resources/customTypes/loginDetails";
 import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
-import { HomeScreenUtils } from "../../commpnFunctions/homeScreenUtils";
+import { HomeScreenUtils } from "../commonFunctions/homeScreenUtils";
 
 let homeScreen: HomeScreen;
 let myCartScreen: MyCartScreen;

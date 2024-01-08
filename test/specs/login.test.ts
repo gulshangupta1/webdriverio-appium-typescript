@@ -1,4 +1,4 @@
-import { HomeScreenUtils } from "../../commpnFunctions/homeScreenUtils";
+import { HomeScreenUtils } from "../commonFunctions/homeScreenUtils";
 import { FileUtils } from "../../utilities/fileUtils";
 import { LoggerHelper, LOGGER } from "../../utilities/reporting/loggerHelper";
 import { LoginDetails } from "../resources/customTypes/loginDetails";
