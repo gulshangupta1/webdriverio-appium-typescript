@@ -1,9 +1,9 @@
-import { HamburgerMenuScreen } from "../test/screens/hamburgerMenuScreen";
-import { HomeScreen } from "../test/screens/homeScreen";
-import { LoginScreen } from "../test/screens/loginScreen";
-import { LogoutScreen } from "../test/screens/logoutScreen";
-import { BaseActions } from "../utilities/baseActions";
-import { LOGGER } from "../utilities/reporting/loggerHelper";
+import { HamburgerMenuScreen } from "../screens/hamburgerMenuScreen";
+import { HomeScreen } from "../screens/homeScreen";
+import { LoginScreen } from "../screens/loginScreen";
+import { LogoutScreen } from "../screens/logoutScreen";
+import { BaseActions } from "../../utilities/baseActions";
+import { LOGGER } from "../../utilities/reporting/loggerHelper";
 
 export class HomeScreenUtils extends BaseActions {
     homeScreen: HomeScreen;
@@ -46,6 +46,5 @@ export class HomeScreenUtils extends BaseActions {
             LOGGER.error('Error while trying to log out.');
             throw errr;
         }
-
     }
 }
