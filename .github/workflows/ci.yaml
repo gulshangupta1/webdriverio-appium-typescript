@@ -20,11 +20,14 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Install Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: "adopt"
-          java-version: "11"
+      - name: Install Allure Commandline
+        run: npm install -g allure-commandline
+
+      # - name: Install Java
+      #   uses: actions/setup-java@v2
+      #   with:
+      #     distribution: "adopt"
+      #     java-version: "11"
 
       - name: Run Tests
         env:
