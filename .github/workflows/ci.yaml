@@ -20,15 +20,15 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Install Allure Commandline
-        run: npm install -g allure-commandline
-
       - name: Run Tests
         env:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         run: npm run bs-android
         continue-on-error: true
+
+      - name: Debug - List Contents of Allure Results Directory
+        run: ls -R ./allure-results
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v2
