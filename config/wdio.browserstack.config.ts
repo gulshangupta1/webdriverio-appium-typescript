@@ -51,6 +51,18 @@ exports.config = {
             networkLogs: true
         }
     },
+    reporters: [
+        "spec",
+        [
+            "allure",
+            {
+                outputDir: "allure-results",
+                disableWebdriverStepsReporting: true,
+                disableWebdriverScreenshotsReporting: false,
+                disableMochaHooks: true
+            },
+        ],
+    ],
     mochaOpts: {
         ui: "bdd",
         timeout: 60000,
