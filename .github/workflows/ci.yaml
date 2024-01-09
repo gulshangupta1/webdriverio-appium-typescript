@@ -30,10 +30,6 @@ jobs:
         run: npm run bs-android
         continue-on-error: true
 
-      # - name: Generate Allure report
-      #   # run: allure generate ./allure-results --clean -o ./allure-report
-      #   run: npx allure generate allure-results
-
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v2
         with:
