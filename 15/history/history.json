@@ -1,0 +1,1 @@
+{"9750b9ed62fbd1a7133a00de46c79caf":{"statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1},"items":[{"uid":"ae56836e7d50eee5","reportUrl":"https://gulshangupta1.github.io/webdriverio-appium-typescript/15//#testresult/ae56836e7d50eee5","status":"passed","time":{"start":1705052173719,"stop":1705052181113,"duration":7394}}]}}
