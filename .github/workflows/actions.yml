@@ -14,6 +14,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Create gh-pages branch if not exists
+        run: |
+          if ! git show-ref --quiet refs/heads/gh-pages; then
+            git checkout --orphan gh-pages
+            git rm -rf .
+            git commit --allow-empty -m "Initialize gh-pages branch"
+            git push origin gh-pages
+          fi
+
       - name: Download node
         uses: actions/setup-node@v3
         with:
