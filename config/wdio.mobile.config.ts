@@ -9,14 +9,25 @@ const ANDROID_CAPABILITIES = [
         'appium:udid': 'emulator-5554',
         'appium:app': `${process.cwd()}/app/android/android_sauce_lab_app.apk`,
         'appium:chromedriverExecutable': `${process.cwd()}/app/chromedriver`
-    },
+    }
+];
+
+const IOS_CAPABILITIES = [
+    {
+        'platformName': 'iOS',
+        'appium:deviceName': 'iPhone 15 Pro',
+        'appium:automationName': 'XCUITest',
+        'appium:udid': '86E68CFA-349F-45F1-84D2-1956419487EE',
+        'appium:platformVersion': '17.0',
+        'appium:app': `${process.cwd()}/`
+    }
 ];
 
 exports.config = {
     runner: "local",
     port: 4723,
     specs: [`${process.cwd()}/test/specs/**/*.test.ts`],
-    capabilities: ANDROID_CAPABILITIES,
+    capabilities: process.env.PLATFORM === "ANDROID" ? ANDROID_CAPABILITIES : IOS_CAPABILITIES,
     maxInstances: 1,
     logLevel: "info",
     waitforTimeout: 30000,
@@ -47,8 +58,5 @@ exports.config = {
         if (!passed) {
             await driver.saveScreenshot(`./errorShots/${test.title.replaceAll(" ", "_")}.png`);
         }
-    },
-    // before: async function (capabilities, specs) {
-    //     LoggerHelper.setupLogger();
-    // },
+    }
 };
