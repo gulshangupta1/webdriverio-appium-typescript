@@ -14,16 +14,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Create gh-pages branch if not exists
-        run: |
-          if ! git ls-remote --exit-code --heads origin gh-pages; then
-            git branch -D gh-pages || true  # Delete any local gh-pages branch
-            git checkout --orphan gh-pages
-            git rm -rf .
-            git commit --allow-empty -m "Initial commit"
-            git push origin gh-pages
-          fi
-
       - name: Download node
         uses: actions/setup-node@v3
         with:
