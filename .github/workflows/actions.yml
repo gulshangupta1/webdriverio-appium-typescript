@@ -31,6 +31,32 @@ jobs:
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: allure-results
           path: ./allure-results
+
+      - name: Get allure history
+        uses: actions/checkout@v3
+        if: always()
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure report action
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh-pages: gh-pages
+          keep_reports: allure-results
+          allure_history: allure-history
+
+      - name: Deploy Allure report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          PERSONAL_TOKEN: ${{ secrets.TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
