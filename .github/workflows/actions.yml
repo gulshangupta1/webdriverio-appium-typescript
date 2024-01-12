@@ -16,10 +16,11 @@ jobs:
 
       - name: Create gh-pages branch if not exists
         run: |
-          if ! git show-ref --quiet refs/heads/gh-pages; then
+          if ! git ls-remote --exit-code --heads origin gh-pages; then
+            git branch -D gh-pages || true  # Delete any local gh-pages branch
             git checkout --orphan gh-pages
             git rm -rf .
-            git commit --allow-empty -m "Initialize gh-pages branch"
+            git commit --allow-empty -m "Initial commit"
             git push origin gh-pages
           fi
 
@@ -30,9 +31,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
-      - name: Create branch
-        run: git checkout gh-pages
 
       - name: Run Tests
         env:
