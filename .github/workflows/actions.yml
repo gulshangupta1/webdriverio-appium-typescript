@@ -29,19 +29,13 @@ jobs:
         run: npm run bs-android
         continue-on-error: true
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: zulu
-          java-version: 17
+      # - name: Upload Allure Report as Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: allure-results
+      #     path: ./allure-results
 
-      - name: Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: ./allure-results
-
-      - name: Load test report history
+      - name: Get allure history
         uses: actions/checkout@v3
         if: always()
         continue-on-error: true
@@ -49,18 +43,20 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
+      - name: Allure report action
+        uses: simple-elf/allure-report-action@main
         if: always()
+        id: allure-report
         with:
-          gh_pages: gh-pages
+          allure_results: allure-results
+          gh-pages: gh-pages
+          keep_reports: allure-results
           allure_history: allure-history
-          allure_results: build/allure-results
 
-      - name: Publish test report
+      - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
-          github_token: ${{ secrets.TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
+          PERSONAL_TOKEN: ${{ secrets.TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
