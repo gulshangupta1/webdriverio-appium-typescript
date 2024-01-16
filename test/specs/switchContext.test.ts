@@ -1,5 +1,5 @@
 import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
-import { SwitchContextUtils } from "../../utilities/switchContextUtils";
+import { SwitchContextUtil } from "../../utilities/switchContextUtil";
 import { HamburgerMenuScreen } from "../screens/hamburgerMenuScreen";
 import { HomeScreen } from "../screens/homeScreen";
 import { WebviewScreen } from "../screens/webviewScreen";
@@ -7,7 +7,7 @@ import { WebviewScreen } from "../screens/webviewScreen";
 let homeScreen: HomeScreen;
 let hamburgerMenuScreen: HamburgerMenuScreen;
 let webviewScreen: WebviewScreen;
-let switchContextUtils: SwitchContextUtils;
+let switchContextUtils: SwitchContextUtil;
 
 const specName: string = 'Switching Between Contexts Tests';
 describe('Switching Between Native and Web Views', () => {
@@ -16,7 +16,7 @@ describe('Switching Between Native and Web Views', () => {
         homeScreen = new HomeScreen();
         hamburgerMenuScreen = new HamburgerMenuScreen();
         webviewScreen = new WebviewScreen();
-        switchContextUtils = new SwitchContextUtils();
+        switchContextUtils = new SwitchContextUtil();
     });
 
     afterEach(async () => {

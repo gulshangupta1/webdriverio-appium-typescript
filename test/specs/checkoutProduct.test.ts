@@ -1,41 +1,44 @@
 import { FileUtil } from "../../utilities/fileUtil";
+import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 import { CardDetails } from "../resources/customTypes/cardDetails";
+import { LoginDetails } from "../resources/customTypes/loginDetails";
 import { ShippingAddressDetails } from "../resources/customTypes/shippingAddressDetails";
 import { CheckoutScreen } from "../screens/checkoutScreen";
 import { HomeScreen } from "../screens/homeScreen";
+import { LoginScreen } from "../screens/loginScreen";
 import { MyCartScreen } from "../screens/myCartScreen";
 import * as loginDetailsJson from "./../resources/testdata/loginDetails.json";
-import * as shippingAddressDetailsJson from "./../resources/testdata/shippingAddressDetails.json";
 import * as cardDetailsJson from "./../resources/testdata/cardDetails.json";
-import { LoginDetails } from "../resources/customTypes/loginDetails";
-import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
-import { HomeScreenUtil } from "../commonFunctions/homeScreenUtil";
+import * as shippingAddressDetailsJson from "./../resources/testdata/shippingAddressDetails.json";
 
 let homeScreen: HomeScreen;
 let myCartScreen: MyCartScreen;
+let loginScreen: LoginScreen;
 let checkoutScreen: CheckoutScreen;
-let homeScreenUtils: HomeScreenUtil;
 
-const specName: string = 'Add item to cart tests';
-describe('Add item to cart', () => {
+const specName: string = 'Checkout procuct tests'
+describe('Checkout flow scenarios test', () => {
     before(async () => {
-        LoggerHelper.setupLogger(specName)
+        LoggerHelper.setupLogger(specName);
         homeScreen = new HomeScreen();
         myCartScreen = new MyCartScreen();
+        loginScreen = new LoginScreen();
         checkoutScreen = new CheckoutScreen();
-        homeScreenUtils = new HomeScreenUtil();
     });
 
-    it('Add first item to cart', async () => {
+    it('Checkout the product without login', async () => {
         const loginDetails: LoginDetails = FileUtil.convertJsonToCustomType(loginDetailsJson);
         const shippingAddressDetails: ShippingAddressDetails = FileUtil.convertJsonToCustomType(shippingAddressDetailsJson);
         const cardDetails: CardDetails = FileUtil.convertJsonToCustomType(cardDetailsJson);
+        const productName: string = 'Sauce Labs Onesie';
 
-        await homeScreenUtils.login(loginDetails.username, loginDetails.password);
-        await homeScreen.tapOnFirstItem();
+        await homeScreen.clickOnProduct(productName);
         await homeScreen.clickAddToCartButton();
         await homeScreen.clickCartIcon();
         await myCartScreen.clickProceedToCheckoutButton();
+        await loginScreen.enterUsername(loginDetails.username);
+        await loginScreen.enterPassword(loginDetails.password);
+        await loginScreen.clickLoginButton();
         await checkoutScreen.enterShippingAddressDetails(shippingAddressDetails);
         await checkoutScreen.clickToPaymentButton();
         await checkoutScreen.enterCardDetails(cardDetails);

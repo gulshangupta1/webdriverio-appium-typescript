@@ -5,7 +5,7 @@ import { LogoutScreen } from "../screens/logoutScreen";
 import { BaseActions } from "../../utilities/baseActions";
 import { LOGGER } from "../../utilities/reporting/loggerHelper";
 
-export class HomeScreenUtils extends BaseActions {
+export class HomeScreenUtil extends BaseActions {
     homeScreen: HomeScreen;
     loginScreen: LoginScreen;
     hamburgerMenuScreen: HamburgerMenuScreen;

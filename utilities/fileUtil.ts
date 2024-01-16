@@ -1,4 +1,4 @@
-export class FileUtils {
+export class FileUtil {
 
     /**
      * Convert a JSON object to a custom type.

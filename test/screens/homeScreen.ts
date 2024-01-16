@@ -1,8 +1,6 @@
 import { LOGGER } from '../../utilities/reporting/loggerHelper';
+import { XpathUtil } from '../../utilities/xpathUtil';
 import { BaseActions } from './../../utilities/baseActions';
-import { HamburgerMenuScreen } from './hamburgerMenuScreen';
-import { LoginScreen } from './loginScreen';
-import { LogoutScreen } from './logoutScreen';
 
 const platform = process.env.PLATFORM;
 
@@ -25,6 +23,9 @@ export class HomeScreen extends BaseActions {
             "",
         footer: platform === "ANDROID" ?
             "//android.widget.TextView[@text='© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']/parent::android.view.ViewGroup" :
+            "",
+        productByName: platform === "ANDROID" ?
+            "//android.widget.TextView[@content-desc='store item text' and @text='##PLACEHOLDER##']/parent::android.view.ViewGroup" :
             ""
     };
 
@@ -77,5 +78,18 @@ export class HomeScreen extends BaseActions {
     async PressHoldOffsetFirstItem() {
         const firstItemEle = await $(this.locators.firstItem);
         await this.pressAndHoldAtOffset(firstItemEle, 100, 100, 5000);
+    }
+
+    async clickOnProduct(productName: string): Promise<void> {
+        try {
+            const product = await $(XpathUtil.getPlaceholderReplaced(this.locators.productByName, productName));
+            await this.swipe(product);
+            await product.waitForDisplayed({ timeout: 10000 });
+            await product.click();
+        }
+        catch (error) {
+            LOGGER.error(`Product: ${productName} not available\n${error.stack}`);
+            throw error;
+        }
     }
 }
