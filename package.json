@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "wdio": "wdio run ./wdio.conf.ts",
-    "android": "PLATFORM=ANDROID npx wdio run config/wdio.android.config.ts --spec test/specs/login.test.ts",
-    "ios": "PLATFORM=IOS npx wdio run config/wdio.ios.config.ts --spec test/specs/login.test.ts",
+    "android": "PLATFORM=ANDROID npx wdio run ./config/wdio.mobile.config.ts --spec test/specs/checkoutProduct.test.ts",
+    "ios": "PLATFORM=IOS npx wdio run ./config/wdio.mobile.config.ts --spec test/specs/login.test.ts",
     "android:chrome:browser": "PLATFORM=ANDROID npx wdio run config/wdio.chromebrowser.config.ts --spec test/specs/login.test.ts",
     "bs-android": "PLATFORM=ANDROID npx wdio run ./config/wdio.browserstack.config.ts --spec test/specs/login.test.ts",
     "bs-ios": "PLATFORM=IOS npx wdio run ./config/wdio.browserstack.config.ts --spec test/specs/login.test.ts",
