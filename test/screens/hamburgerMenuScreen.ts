@@ -1,4 +1,4 @@
-import { BaseActions } from "../../utilities/baseActions";
+import { BaseActions } from "../../utilities/actions/baseActions";
 
 const platform = process.env.PLATFORM;
 

@@ -1,5 +1,5 @@
 import { HomeScreenUtil } from "../commonFunctions/homeScreenUtil";
-import { FileUtil } from "../../utilities/fileUtil";
+import { FileUtil } from "../../utilities/file/fileUtil";
 import { LoggerHelper, LOGGER } from "../../utilities/reporting/loggerHelper";
 import { LoginDetails } from "../resources/customTypes/loginDetails";
 import { HomeScreen } from "../screens/homeScreen";

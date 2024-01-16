@@ -1,5 +1,5 @@
 import { HomeScreen } from "../screens/homeScreen";
-import { BaseActions } from "../../utilities/baseActions";
+import { BaseActions } from "../../utilities/actions/baseActions";
 import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 
 let homeScreen: HomeScreen;

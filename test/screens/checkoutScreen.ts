@@ -1,4 +1,4 @@
-import { BaseActions } from "../../utilities/baseActions";
+import { BaseActions } from "../../utilities/actions/baseActions";
 import { CardDetails } from "../resources/customTypes/cardDetails";
 import { ShippingAddressDetails } from "../resources/customTypes/shippingAddressDetails";
 

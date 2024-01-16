@@ -1,4 +1,4 @@
-import { LOGGER } from "./reporting/loggerHelper";
+import { LOGGER } from "../reporting/loggerHelper";
 
 export namespace XpathUtil {
     export function getPlaceholderReplaced(xpath: string, replacement: string): string {

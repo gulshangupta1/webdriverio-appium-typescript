@@ -2,7 +2,7 @@ import { HamburgerMenuScreen } from "../screens/hamburgerMenuScreen";
 import { HomeScreen } from "../screens/homeScreen";
 import { LoginScreen } from "../screens/loginScreen";
 import { LogoutScreen } from "../screens/logoutScreen";
-import { BaseActions } from "../../utilities/baseActions";
+import { BaseActions } from "../../utilities/actions/baseActions";
 import { LOGGER } from "../../utilities/reporting/loggerHelper";
 
 export class HomeScreenUtil extends BaseActions {
