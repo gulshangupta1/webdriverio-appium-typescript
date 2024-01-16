@@ -1,4 +1,4 @@
-import { FileUtil } from "../../utilities/fileUtil";
+import { FileUtil } from "../../utilities/file/fileUtil";
 import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 import { CardDetails } from "../resources/customTypes/cardDetails";
 import { LoginDetails } from "../resources/customTypes/loginDetails";

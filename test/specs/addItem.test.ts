@@ -1,4 +1,4 @@
-import { FileUtil } from "../../utilities/fileUtil";
+import { FileUtil } from "../../utilities/file/fileUtil";
 import { CardDetails } from "../resources/customTypes/cardDetails";
 import { ShippingAddressDetails } from "../resources/customTypes/shippingAddressDetails";
 import { CheckoutScreen } from "../screens/checkoutScreen";

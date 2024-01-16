@@ -1,6 +1,6 @@
 import { LOGGER } from '../../utilities/reporting/loggerHelper';
-import { XpathUtil } from '../../utilities/xpathUtil';
-import { BaseActions } from './../../utilities/baseActions';
+import { XpathUtil } from '../../utilities/xpath/xpathUtil';
+import { BaseActions } from '../../utilities/actions/baseActions';
 
 const platform = process.env.PLATFORM;
 

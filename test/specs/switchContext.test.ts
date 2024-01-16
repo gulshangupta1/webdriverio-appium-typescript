@@ -1,5 +1,5 @@
 import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
-import { SwitchContextUtil } from "../../utilities/switchContextUtil";
+import { SwitchContextUtil } from "../../utilities/actions/switchContextUtil";
 import { HamburgerMenuScreen } from "../screens/hamburgerMenuScreen";
 import { HomeScreen } from "../screens/homeScreen";
 import { WebviewScreen } from "../screens/webviewScreen";
