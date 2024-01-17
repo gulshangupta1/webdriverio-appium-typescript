@@ -177,7 +177,6 @@ describe.skip(specName, () => {
     it('Clipboard related tests', async () => {
         let textToCopy: string = 'Hi appium';
         const textToCopyBase64 = Buffer.from(textToCopy).toString('base64');
-        // const textToCopyBase64 = Buffer.from(textToCopy, 'base64').toString('base64');
 
         // Set the clipboard (copy)
         await driver.setClipboard(textToCopyBase64);
