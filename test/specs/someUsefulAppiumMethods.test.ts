@@ -32,7 +32,7 @@ describe.skip(specName, () => {
         await driver.activateApp("com.saucelabs.mydemoapp.rn");
     });
 
-    it.skip('Toggle Airplane Mode Tests', async () => {
+    it('Toggle Airplane Mode Tests', async () => {
         const packageName: string = await driver.getCurrentPackage();
         await driver.terminateApp(packageName);
 
@@ -49,7 +49,7 @@ describe.skip(specName, () => {
         expect(connectionStatus).to.be.equal(NetworkConnectionStatus.ALL_NETWORKS);    // 6: All network connections
     });
 
-    it.skip('Toggle Data test', async () => {
+    it('Toggle Data test', async () => {
         const packageName: string = await driver.getCurrentPackage();
         await driver.terminateApp(packageName);
 
@@ -66,7 +66,7 @@ describe.skip(specName, () => {
         expect(connectionStatus).to.be.equal(NetworkConnectionStatus.ALL_NETWORKS);    // 6: All network connections
     });
 
-    it.skip('Toggle WiFi test', async () => {
+    it('Toggle WiFi test', async () => {
         const packageName: string = await driver.getCurrentPackage();
         await driver.terminateApp(packageName);
 
@@ -83,14 +83,14 @@ describe.skip(specName, () => {
         expect(connectionStatus).to.be.equal(NetworkConnectionStatus.ALL_NETWORKS);    // 6: All network connections
     });
 
-    it.skip('Toggle Location Service', async () => {
+    it('Toggle Location Service', async () => {
         // Toggle Location Service
         await driver.toggleLocationServices();
         await driver.pause(5000);
         await driver.toggleLocationServices();
     });
 
-    it.skip('Lock device tests', async () => {
+    it('Lock device tests', async () => {
         // Lock the device
         await driver.lock();
         let isLocked = await driver.isLocked();
@@ -102,7 +102,7 @@ describe.skip(specName, () => {
         expect(isLocked).to.be.false;
     });
 
-    it.skip('Install and Uninstall app test and app status', async () => {
+    it('Install and Uninstall app test and app status', async () => {
         const appPackageName: string = await driver.getCurrentPackage();
         const appPath: string = `${process.cwd()}/app/android/android_sauce_lab_app.apk`;
 
@@ -148,7 +148,7 @@ describe.skip(specName, () => {
         expect(appState, 'App should be running in foreground').to.be.equal(appStatus.RUNNING_IN_FOREGROUND);  // 4: running in foreground
     });
 
-    it.skip('Device time and display density', async () => {
+    it('Device time and display density', async () => {
         // Get device time
         const deviceTime: string = await driver.getDeviceTime();
         LOGGER.info('Device time: ' + deviceTime);
@@ -159,17 +159,18 @@ describe.skip(specName, () => {
         LOGGER.info('Device display density: ' + displayDensity);
     });
 
-    it.skip('Settings tests', async () => {
+    it('Settings tests', async () => {
         const settings = await driver.getSettings();
         LOGGER.info(settings);
     });
 
-    it.skip('Battery specific tests', async () => {
+    it('Battery specific tests', async () => {
         const fullBattery: number = 100;
         const batteryPercentage: number = 80;
 
         // Change the battery percentace
         await driver.powerCapacity(batteryPercentage);
+        await driver.pause(5000);
         await driver.powerCapacity(fullBattery);
 
         // Change the state the battery charger to connected or not
@@ -177,7 +178,7 @@ describe.skip(specName, () => {
         await driver.powerAC('off');
     });
 
-    it.skip('Clipboard related tests', async () => {
+    it('Clipboard related tests', async () => {
         let textToCopy: string = 'Hi appium';
         const textToCopyBase64 = Buffer.from(textToCopy).toString('base64');
 
@@ -190,7 +191,7 @@ describe.skip(specName, () => {
         expect(textToCopy, 'Data is not getting copied to clipboard').to.be.equal(clipboardTextUtf8);
     });
 
-    it.skip('Android press button tests', async () => {
+    it('Android press button tests', async () => {
         // Home button
         await androidKeyActions.pressHome();
 
@@ -212,7 +213,7 @@ describe.skip(specName, () => {
         await androidKeyActions.pressPower();
     });
 
-    it.skip('Switch between two apps (activateApp(appPackageName))', async () => {
+    it('Switch between two apps (activateApp(appPackageName))', async () => {
         const souceLabAppPackage: string = await driver.getCurrentPackage();
         const cameraAppPackage = 'com.android.camera2';
 
@@ -232,9 +233,9 @@ describe.skip(specName, () => {
         await driver.terminateApp(cameraAppPackage);
     });
 
-    it.skip('Switch between two apps (activateApp())', async () => {
-        const souceLabAppPackage: string = await driver.getCurrentPackage();
-        const souceLabAppPackageActivity = "com.saucelabs.mydemoapp.rn.MainActivity";
+    it('Switch between two apps (startActivity(packageName, activityName))', async () => {
+        const sauceLabAppPackage: string = await driver.getCurrentPackage();
+        const sauceLabAppPackageActivity = "com.saucelabs.mydemoapp.rn.MainActivity";
 
         const cameraAppPackage = 'com.android.camera2';
         const cameraAppActivity = "com.android.camera.CameraLauncher";
@@ -247,10 +248,10 @@ describe.skip(specName, () => {
         await androidKeyActions.pressCamera();
         await driver.pause(5000);
 
-        await driver.startActivity(souceLabAppPackage, souceLabAppPackageActivity);
+        await driver.startActivity(sauceLabAppPackage, sauceLabAppPackageActivity);
 
         // Terminating both apps
-        await driver.terminateApp(souceLabAppPackage);
+        await driver.terminateApp(sauceLabAppPackage);
         await driver.terminateApp(cameraAppPackage);
 
         await driver.pause(1000);
