@@ -101,7 +101,7 @@ export class SwipeActionsUtil {
      * @param {number} [maxScrollAttempts=5] - The maximum number of scroll attempts.
      * @returns {Promise<boolean>} - A Promise that resolves to `true` if the element is found or `false` if the maximum attempts are reached. 
      */
-    async swipeByPercentage(element: string | WebdriverIO.Element, startPercentage: number = 50, endPercentage: number = 20, maxScrollAttempts: number = 5): Promise<boolean> {
+    async swipeByPercentage(element: string | WebdriverIO.Element, startPercentage: number = 80, endPercentage: number = 20, maxScrollAttempts: number = 5): Promise<boolean> {
         let elementFound: boolean = false;
 
         try {
@@ -117,8 +117,8 @@ export class SwipeActionsUtil {
 
                 const screenSize = await driver.getWindowRect();
 
-                const startX = screenSize.width * (startPercentage / 100);
-                const startY = screenSize.height * (80 / 100);
+                const startX = screenSize.width * (50 / 100);
+                const startY = screenSize.height * (startPercentage / 100);
                 const endY = screenSize.height * (endPercentage / 100);
 
                 await driver.touchAction([
