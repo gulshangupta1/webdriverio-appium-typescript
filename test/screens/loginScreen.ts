@@ -7,13 +7,13 @@ export class LoginScreen extends BaseActions {
     private locators = {
         userNameInputField: platform === 'ANDROID' ?
             '~Username input field' :
-            "",
+            "~Username input field",
         passwordInputField: platform === 'ANDROID' ?
             '~Password input field' :
-            "",
+            "~Password input field",
         loginButton: platform === 'ANDROID' ?
             '~Login button' :
-            ""
+            "~Login button"
     };
 
     async getLoginButtonEle() {
@@ -23,6 +23,7 @@ export class LoginScreen extends BaseActions {
     async enterUsername(userName: string) {
         const userNameInputFieldEle = await $(this.locators.userNameInputField);
         await userNameInputFieldEle.waitForDisplayed();
+        // await userNameInputFieldEle.addValue(userName);
         await userNameInputFieldEle.setValue(userName);
     }
 
@@ -30,6 +31,7 @@ export class LoginScreen extends BaseActions {
         const passwordInputFieldEle = await $(this.locators.passwordInputField);
         await passwordInputFieldEle.waitForDisplayed();
         await passwordInputFieldEle.setValue(password);
+        await driver.hideKeyboard();
     }
 
     async clickLoginButton() {

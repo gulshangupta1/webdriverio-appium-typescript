@@ -1,11 +1,11 @@
 import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 import { SwitchContextUtil } from "../../utilities/actions/switchContextUtil";
-import { HamburgerMenuScreen } from "../screens/hamburgerMenuScreen";
+import { MenuScreen } from "../screens/menuScreen";
 import { HomeScreen } from "../screens/homeScreen";
 import { WebviewScreen } from "../screens/webviewScreen";
 
 let homeScreen: HomeScreen;
-let hamburgerMenuScreen: HamburgerMenuScreen;
+let hamburgerMenuScreen: MenuScreen;
 let webviewScreen: WebviewScreen;
 let switchContextUtils: SwitchContextUtil;
 
@@ -14,7 +14,7 @@ describe('Switching Between Native and Web Views', () => {
     before(async () => {
         LoggerHelper.setupLogger(specName);
         homeScreen = new HomeScreen();
-        hamburgerMenuScreen = new HamburgerMenuScreen();
+        hamburgerMenuScreen = new MenuScreen();
         webviewScreen = new WebviewScreen();
         switchContextUtils = new SwitchContextUtil();
     });
@@ -28,7 +28,7 @@ describe('Switching Between Native and Web Views', () => {
     it('Should switch between native and web views successfully', async () => {
         const url: string = 'https://www.ultralesson.ai';
 
-        await homeScreen.clickHamburgerMenuButton();
+        await homeScreen.clickMenuButton();
         await hamburgerMenuScreen.clickMenuItemWebview();
         await webviewScreen.enterUrl(url);
         await webviewScreen.clickGoToSiteButton();
@@ -47,13 +47,13 @@ describe('Switching Between Native and Web Views', () => {
         console.log('The webview url: ' + await browser.getUrl());
         await driver.switchContext(nativeView.toString());
         await driver.back();
-        await homeScreen.clickHamburgerMenuButton();
+        await homeScreen.clickMenuButton();
     });
 
     it('Should switch between native and web views successfully (using SwitchContextUtils)', async () => {
         const url: string = 'https://www.ultralesson.ai';
 
-        await homeScreen.clickHamburgerMenuButton();
+        await homeScreen.clickMenuButton();
         await hamburgerMenuScreen.clickMenuItemWebview();
         await webviewScreen.enterUrl(url);
         await webviewScreen.clickGoToSiteButton();
@@ -62,6 +62,6 @@ describe('Switching Between Native and Web Views', () => {
         console.log('The webview url: ' + await browser.getUrl());
         await switchContextUtils.switchToNativeContext();
         await driver.back();
-        await homeScreen.clickHamburgerMenuButton();
+        await homeScreen.clickMenuButton();
     });
 });

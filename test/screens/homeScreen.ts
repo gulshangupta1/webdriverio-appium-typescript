@@ -6,12 +6,12 @@ const platform = process.env.PLATFORM;
 
 export class HomeScreen extends BaseActions {
     private locators = {
-        hamburgerMenuIcon: platform === 'ANDROID' ?
+        menuIcon: platform === 'ANDROID' ?
             "~open menu" :
-            "",
+            "~tab bar option menu",
         productTextOnHomeScreen: platform === "ANDROID" ?
             "//android.widget.TextView[@text='Products']" :
-            "",
+            "//XCUIElementTypeStaticText[@name='Products']",
         firstItem: platform === 'ANDROID' ?
             "(//android.view.ViewGroup[@content-desc='store item'])[1]/android.view.ViewGroup[1]/android.widget.ImageView" :
             "",
@@ -42,11 +42,11 @@ export class HomeScreen extends BaseActions {
     }
 
     async getHamburgerMenuIconEle(): Promise<WebdriverIO.Element> {
-        return await $(this.locators.hamburgerMenuIcon);
+        return await $(this.locators.menuIcon);
     }
 
-    async clickHamburgerMenuButton() {
-        const hamburgerMenuIconEle = await $(this.locators.hamburgerMenuIcon);
+    async clickMenuButton() {
+        const hamburgerMenuIconEle = await $(this.locators.menuIcon);
         await hamburgerMenuIconEle.click();
     }
 
