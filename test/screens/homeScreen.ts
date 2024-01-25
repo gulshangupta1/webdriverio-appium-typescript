@@ -15,9 +15,6 @@ export class HomeScreen extends BaseActions {
         firstItem: platform === 'ANDROID' ?
             "(//android.view.ViewGroup[@content-desc='store item'])[1]/android.view.ViewGroup[1]/android.widget.ImageView" :
             "",
-        addToCartButton: platform === "ANDROID" ?
-            "~Add To Cart button" :
-            "",
         cartIcon: platform === "ANDROID" ?
             "~cart badge" :
             "",
@@ -55,11 +52,6 @@ export class HomeScreen extends BaseActions {
         await firstItemEle.click();
     }
 
-    async clickAddToCartButton() {
-        const addToCartButtonEle = await $(this.locators.addToCartButton);
-        await addToCartButtonEle.click();
-    }
-
     async clickCartIcon() {
         const cartIconEle = await $(this.locators.cartIcon);
         await cartIconEle.click();
@@ -67,7 +59,6 @@ export class HomeScreen extends BaseActions {
 
     async tapOnFirstItem() {
         await this.tap(this.locators.firstItem);
-        await (await $(this.locators.addToCartButton)).waitForDisplayed();
     }
 
     async pressHoldFirstItem() {
