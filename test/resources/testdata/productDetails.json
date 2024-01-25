@@ -1,4 +1,11 @@
 {
-    "productName": "Sauce Labs Backpack",
-    "productPrice": 29.99
+    "name": "Sauce Labs Backpack",
+    "price": 29.99,
+    "availableColors": [
+        "BLACK",
+        "BLUE",
+        "GRAY",
+        "RED"
+    ],
+    "description": "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection."
 }

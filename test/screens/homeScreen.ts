@@ -84,11 +84,11 @@ export class HomeScreen extends BaseActions {
         try {
             const product = await $(XpathUtil.getPlaceholderReplaced(this.locators.productByName, productName));
             await this.swipe(product);
-            await product.waitForDisplayed({ timeout: 10000 });
+            await product.waitForDisplayed({ timeout: 30000 });
             await product.click();
         }
         catch (error) {
-            LOGGER.error(`Product: ${productName} not available\n${error.stack}`);
+            LOGGER.error(`Product ${productName} not available\n${error.stack}`);
             throw error;
         }
     }

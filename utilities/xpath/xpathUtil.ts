@@ -12,4 +12,10 @@ export namespace XpathUtil {
             throw error;
         }
     }
+
+    export function extractNumberFromString(inputString: string): number | null {
+        const extractedNumber = parseFloat(inputString.replace(/[^\d.]/g, ''));
+
+        return isNaN(extractedNumber) ? null : extractedNumber;
+    }
 }

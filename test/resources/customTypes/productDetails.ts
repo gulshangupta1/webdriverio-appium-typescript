@@ -1,6 +1,8 @@
 export interface ProductDetails {
-    productName: string,
-    productPrice: number,
-    productColor?: string,
-    productHighlight?: string
+    name: string,
+    price: number,
+    availableColors?: string[],
+    description?: string,
+    color?: string,
+    quantity?: number
 }
