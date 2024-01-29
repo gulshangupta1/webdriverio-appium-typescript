@@ -10,11 +10,13 @@ import * as cardDetailsJson from "./../resources/testdata/cardDetails.json";
 import { LoginDetails } from "../resources/customTypes/loginDetails";
 import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 import { HomeScreenUtil } from "../commonFunctions/homeScreenUtil";
+import { ProductScreen } from "../screens/productScreen";
 
 let homeScreen: HomeScreen;
 let myCartScreen: MyCartScreen;
 let checkoutScreen: CheckoutScreen;
 let homeScreenUtils: HomeScreenUtil;
+let productScreen: ProductScreen;
 
 const specName: string = 'Add item to cart tests';
 describe('Add item to cart', () => {
@@ -24,6 +26,7 @@ describe('Add item to cart', () => {
         myCartScreen = new MyCartScreen();
         checkoutScreen = new CheckoutScreen();
         homeScreenUtils = new HomeScreenUtil();
+        productScreen = new ProductScreen();
     });
 
     it('Add first item to cart', async () => {
@@ -33,7 +36,7 @@ describe('Add item to cart', () => {
 
         await homeScreenUtils.login(loginDetails.username, loginDetails.password);
         await homeScreen.tapOnFirstItem();
-        await homeScreen.clickAddToCartButton();
+        await productScreen.addProductToCart();
         await homeScreen.clickCartIcon();
         await myCartScreen.clickProceedToCheckoutButton();
         await checkoutScreen.enterShippingAddressDetails(shippingAddressDetails);

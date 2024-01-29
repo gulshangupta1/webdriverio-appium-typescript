@@ -2,11 +2,11 @@ import { BaseActions } from "../../utilities/actions/baseActions";
 
 const platform = process.env.PLATFORM;
 
-export class HamburgerMenuScreen extends BaseActions {
+export class MenuScreen extends BaseActions {
     private locators = {
         menuItemLogin: platform === "ANDROID" ?
             "~menu item log in" :
-            "",
+            "~menu item log in",
         menuItemLogOut: platform === "ANDROID" ?
             "~menu item log out" :
             "",

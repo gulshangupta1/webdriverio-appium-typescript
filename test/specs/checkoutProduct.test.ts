@@ -10,11 +10,13 @@ import { MyCartScreen } from "../screens/myCartScreen";
 import * as loginDetailsJson from "./../resources/testdata/loginDetails.json";
 import * as cardDetailsJson from "./../resources/testdata/cardDetails.json";
 import * as shippingAddressDetailsJson from "./../resources/testdata/shippingAddressDetails.json";
+import { ProductScreen } from "../screens/productScreen";
 
 let homeScreen: HomeScreen;
 let myCartScreen: MyCartScreen;
 let loginScreen: LoginScreen;
 let checkoutScreen: CheckoutScreen;
+let productScreen: ProductScreen;
 
 const specName: string = 'Checkout procuct tests'
 describe('Checkout flow scenarios test', () => {
@@ -24,6 +26,7 @@ describe('Checkout flow scenarios test', () => {
         myCartScreen = new MyCartScreen();
         loginScreen = new LoginScreen();
         checkoutScreen = new CheckoutScreen();
+        productScreen = new ProductScreen();
     });
 
     it('Checkout the product without login', async () => {
@@ -33,7 +36,7 @@ describe('Checkout flow scenarios test', () => {
         const productName: string = 'Sauce Labs Onesie';
 
         await homeScreen.clickOnProduct(productName);
-        await homeScreen.clickAddToCartButton();
+        await productScreen.addProductToCart();
         await homeScreen.clickCartIcon();
         await myCartScreen.clickProceedToCheckoutButton();
         await loginScreen.enterUsername(loginDetails.username);

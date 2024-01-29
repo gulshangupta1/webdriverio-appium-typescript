@@ -1,4 +1,4 @@
-import { HamburgerMenuScreen } from "../screens/hamburgerMenuScreen";
+import { MenuScreen } from "../screens/menuScreen";
 import { HomeScreen } from "../screens/homeScreen";
 import { LoginScreen } from "../screens/loginScreen";
 import { LogoutScreen } from "../screens/logoutScreen";
@@ -8,21 +8,21 @@ import { LOGGER } from "../../utilities/reporting/loggerHelper";
 export class HomeScreenUtil extends BaseActions {
     homeScreen: HomeScreen;
     loginScreen: LoginScreen;
-    hamburgerMenuScreen: HamburgerMenuScreen;
+    hamburgerMenuScreen: MenuScreen;
     logoutScreen: LogoutScreen;
 
     constructor() {
         super();
         this.homeScreen = new HomeScreen();
         this.loginScreen = new LoginScreen();
-        this.hamburgerMenuScreen = new HamburgerMenuScreen();
+        this.hamburgerMenuScreen = new MenuScreen();
         this.logoutScreen = new LogoutScreen();
     }
 
     async login(username: string, password: string) {
         LOGGER.info(`Trying to login with user: ${username}`);
         try {
-            await this.homeScreen.clickHamburgerMenuButton();
+            await this.homeScreen.clickMenuButton();
             await this.hamburgerMenuScreen.clickMenuItemLogin();
             await this.loginScreen.enterUsername(username);
             await this.loginScreen.enterPassword(password);
@@ -37,7 +37,7 @@ export class HomeScreenUtil extends BaseActions {
     async logout() {
         LOGGER.info('Tyring to logout');
         try {
-            await this.homeScreen.clickHamburgerMenuButton();
+            await this.homeScreen.clickMenuButton();
             await this.hamburgerMenuScreen.clickMenuItemLogout();
             await this.logoutScreen.clickLogoutButton();
             await this.logoutScreen.clickOkButton();

@@ -1,9 +1,10 @@
 import { HomeScreenUtil } from "../commonFunctions/homeScreenUtil";
 import { FileUtil } from "../../utilities/file/fileUtil";
-import { LoggerHelper, LOGGER } from "../../utilities/reporting/loggerHelper";
+import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
 import { LoginDetails } from "../resources/customTypes/loginDetails";
 import { HomeScreen } from "../screens/homeScreen";
 import * as loginDetailsJson from "./../resources/testdata/loginDetails.json";
+import { expect } from "chai";
 
 let homeScreenUtils: HomeScreenUtil;
 
@@ -19,6 +20,7 @@ describe('Test login scenarios', () => {
         const homeScreen: HomeScreen = new HomeScreen();
 
         await homeScreenUtils.login(loginDetails.username, loginDetails.password);
-        await (await homeScreen.getProductTextOnHomeScreen()).isDisplayed();
+        const productScreenDisplayed: boolean = await (await homeScreen.getProductTextOnHomeScreen()).isDisplayed();
+        expect(productScreenDisplayed, 'Afetr login user should return to homepage').to.be.true;
     });
 });

@@ -1,5 +1,8 @@
 import * as fs from "fs";
 
+const androidAppName: string = 'android_sauce_lab_app.apk.apk';
+const iosAppName: string = 'MyRNDemoApp.app';
+
 const ANDROID_CAPABILITIES = [
     {
         'appium:platformName': 'Android',
@@ -7,8 +10,9 @@ const ANDROID_CAPABILITIES = [
         'appium:platformVersion': '13.0',
         'appium:automationName': 'UiAutomator2',
         'appium:udid': 'emulator-5554',
-        'appium:app': `${process.cwd()}/app/android/android_sauce_lab_app.apk`,
-        'appium:chromedriverExecutable': `${process.cwd()}/app/chromedriver`
+        'appium:app': `${process.cwd()}/app/android/${androidAppName}`,
+        'appium:chromedriverExecutable': `${process.cwd()}/app/chromedriver`,
+        // 'appium:noReset': true
     }
 ];
 
@@ -19,7 +23,8 @@ const IOS_CAPABILITIES = [
         'appium:automationName': 'XCUITest',
         'appium:udid': '86E68CFA-349F-45F1-84D2-1956419487EE',
         'appium:platformVersion': '17.0',
-        'appium:app': `${process.cwd()}/`
+        'appium:app': `${process.cwd()}/app/ios/${iosAppName}`,
+        // 'appium:noReset': true
     }
 ];
 
