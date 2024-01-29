@@ -72,7 +72,7 @@ export class MyCartScreen extends BaseActions {
 
             await (await $(this.locators.proceedToCheckoutButton)).waitForDisplayed({ timeout: 30000 });
 
-            // Selected color validation
+            // Selected color with product name validation
             for (let product of products) {
                 let xpath = this.locators.selectedColor;
 

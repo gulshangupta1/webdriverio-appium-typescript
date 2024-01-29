@@ -21,7 +21,7 @@ describe(specName, () => {
 
     it('Should add multiple products to cart with quantity more than one', async () => {
         const product1: ProductDetails = FileUtil.convertJsonToCustomType(productDetailsJson);
-        product1.color = 'BLACK';
+        product1.color = product1.availableColors[0];
         product1.quantity = 3;
 
         const product2: ProductDetails = {
@@ -47,14 +47,26 @@ describe(specName, () => {
         await myCartScreen.validateEmptyCartScreen();
     });
 
-    it.skip('Should be able to empty cart', async () => {
-        const product: ProductDetails = FileUtil.convertJsonToCustomType(productDetailsJson);
+    it('Should sort products', async () => {
+        let sortingOrder: string = HomeScreen.sortingOrder.NAME_ASCENDING;
 
-        await homeScreen.clickOnProduct(product.name);
-        await productScreen.validateProductScreen(product);
-        await productScreen.addProductToCart();
-        await homeScreen.clickCartIcon();
-        await myCartScreen.emptyCart();
-        await myCartScreen.validateEmptyCartScreen();
+        // Sorting produts by name (Ascending order)
+        await homeScreen.sortOrder(sortingOrder);
+        await homeScreen.validateProductOrder(sortingOrder);
+
+        // Sorting produts by name (Descending order)
+        sortingOrder = HomeScreen.sortingOrder.NAME_DESCENDING;
+        await homeScreen.sortOrder(sortingOrder);
+        await homeScreen.validateProductOrder(sortingOrder);
+
+        // Sorting produts by price (Ascending order)
+        sortingOrder = HomeScreen.sortingOrder.PRICE_ASCENDING;
+        await homeScreen.sortOrder(sortingOrder);
+        await homeScreen.validateProductOrder(sortingOrder);
+
+        // Sorting produts by price (Descending order)
+        sortingOrder = HomeScreen.sortingOrder.PRICE_DESCENDING;
+        await homeScreen.sortOrder(sortingOrder);
+        await homeScreen.validateProductOrder(sortingOrder);
     });
 });
