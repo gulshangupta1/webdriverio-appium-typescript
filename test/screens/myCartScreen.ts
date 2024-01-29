@@ -34,6 +34,12 @@ export class MyCartScreen extends BaseActions {
             "",
         emptyCartDescription: platform === "ANDROID" ?
             "//android.widget.TextView[@text='Oh no! Your cart is empty. Fill it up with swag to complete your purchase.']" :
+            "",
+        productLabelText: platform === "ANDROID" ?
+            "//android.widget.TextView[@content-desc='product label' and @text='##PLACEHOLDER##']" :
+            "",
+        productPrice: platform === "ANDROID" ?
+            "//android.widget.TextView[@text='##PLACEHOLDER##']/following-sibling::android.widget.TextView[@content-desc='product price']" :
             ""
     }
 
@@ -54,11 +60,42 @@ export class MyCartScreen extends BaseActions {
         await (await $(this.locators.removeItem)).click();
     }
 
+    async validateSelectedColor(product: ProductDetails): Promise<void> {
+        try {
+            let xpath: string = this.locators.selectedColor;
+
+            let colorName: string;
+            switch (product.color) {
+                case 'BLACK':
+                    colorName = this.colorsText.BLACK;
+                    break;
+                case 'BLUE':
+                    colorName = this.colorsText.BLUE;
+                    break;
+                case 'GRAY':
+                    colorName = this.colorsText.GRAY;
+                    break;
+                case 'RED': colorName = this.colorsText.RED;
+                    break;
+            }
+
+            xpath = xpath.replace(/replaceProductName/g, product.name).replace(/replaceProductColor/g, colorName);
+            const isValidSelectedColor: boolean = await (await $(xpath)).isDisplayed();
+            expect(isValidSelectedColor, 'Invalid selected color').to.be.true;
+        } catch (error) {
+            LOGGER.error(`Error while validating selected color: ${product.color}\n${error.stack}`);
+            throw error;
+        }
+    }
+
     async validateMyCartScreen(products: ProductDetails[]): Promise<void> {
         try {
             let totalPrice: number = 0;
             let totalItem: number = 0;
             for (let product of products) {
+                if (product.quantity === undefined) {
+                    product.quantity = 1;
+                }
                 totalPrice += product.price * product.quantity;
                 totalItem += product.quantity;
             }
@@ -72,29 +109,25 @@ export class MyCartScreen extends BaseActions {
 
             await (await $(this.locators.proceedToCheckoutButton)).waitForDisplayed({ timeout: 30000 });
 
-            // Selected color with product name validation
+
             for (let product of products) {
-                let xpath = this.locators.selectedColor;
-
-                let colorName: string;
-                switch (product.color) {
-                    case 'BLACK':
-                        colorName = this.colorsText.BLACK;
-                        break;
-                    case 'BLUE':
-                        colorName = this.colorsText.BLUE;
-                        break;
-                    case 'GRAY':
-                        colorName = this.colorsText.GRAY;
-                        break;
-                    case 'RED': colorName = this.colorsText.RED;
-                        break;
+                // Validating product name
+                const productLabelEle: WebdriverIO.Element = await $(XpathUtil.getPlaceholderReplaced(this.locators.productLabelText, product.name));
+                let isProductNameDisplayed: boolean = await productLabelEle.isDisplayed();
+                if (!isProductNameDisplayed) {
+                    await this.swipe(productLabelEle);
                 }
+                expect(await productLabelEle.isDisplayed(), 'Product name does not displayed').to.be.true;
 
-                xpath = xpath.replace(/replaceProductName/g, product.name);
-                xpath = xpath.replace(/replaceProductColor/g, colorName);
-                const isValidSelectedColor: boolean = await (await $(xpath)).isDisplayed();
-                expect(isValidSelectedColor, 'Invalid selected color').to.be.true;
+                // Validating product price
+                const productPriceEle: WebdriverIO.Element = await $(XpathUtil.getPlaceholderReplaced(this.locators.productPrice, product.name));
+                const productPriceUi: number = XpathUtil.extractNumberFromString(await productPriceEle.getText());
+                expect(productPriceUi, 'Product price is not matching').to.be.equal(product.price);
+
+                // Validating selected color
+                if (product.color !== undefined) {
+                    await this.validateSelectedColor(product);
+                }
             }
         } catch (error) {
             LOGGER.info(`Error while validating MyCart screen\n${error.stack}`);
@@ -109,7 +142,7 @@ export class MyCartScreen extends BaseActions {
 
             while (noItemTextDisplayed != true) {
                 await this.clickRemoveItem();
-                await driver.pause(500);
+                await driver.pause(1000);
                 noItemTextDisplayed = await noItemTextEle.isDisplayed();
             }
         } catch (error) {
