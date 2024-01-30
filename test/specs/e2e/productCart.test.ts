@@ -169,8 +169,62 @@ describe(specName, () => {
         await checkoutScreen.clickToPaymentButton();
         await checkoutScreen.enterCardDetails(cardDetails);
         await checkoutScreen.clickReviewOrderButton();
-        await checkoutScreen.valiadetCheckoutScreen([product]);
+        await checkoutScreen.valiadetCheckoutScreen([product], shippingAddressDetails, cardDetails);
         await checkoutScreen.clickPlaceOrderButton();
+        await checkoutScreen.validateCheckoutCompleteScreen();
+        await checkoutScreen.clickContinueShoppingButton();
+    });
+
+    it('Should be able to place a an order with multiple products', async () => {
+        const loginDetails: LoginDetails = FileUtil.convertJsonToCustomType(loginDetailsJson);
+        const shippingAddressDetails: ShippingAddressDetails = FileUtil.convertJsonToCustomType(shippingAddressDetailsJson);
+        const cardDetails: CardDetails = FileUtil.convertJsonToCustomType(cardDetailsJson);
+
+        const product1: ProductDetails = FileUtil.convertJsonToCustomType(productDetailsJson);
+        const product2: ProductDetails = {
+            name: 'Sauce Labs Onesie',
+            price: 7.99,
+            quantity: 2
+        };
+        const product3: ProductDetails = {
+            name: 'Sauce Labs Fleece Jacket',
+            price: 49.99,
+            quantity: 3
+        };
+        const product4: ProductDetails = {
+            name: 'Sauce Labs Bolt T-Shirt',
+            price: 15.99,
+            quantity: 1
+        };
+
+        await homeScreen.clickOnProduct(product1.name);
+        await productScreen.validateProductScreen(product1);
+        await productScreen.addProductToCart();
+        await driver.back();
+        await homeScreen.clickOnProduct(product2.name);
+        await productScreen.validateProductScreen(product2);
+        await productScreen.addProductToCart(product2.quantity);
+        await driver.back();
+        await homeScreen.clickOnProduct(product3.name);
+        await productScreen.validateProductScreen(product3);
+        await productScreen.addProductToCart(product3.quantity);
+        await driver.back();
+        await homeScreen.clickOnProduct(product4.name);
+        await productScreen.validateProductScreen(product4);
+        await productScreen.addProductToCart(product4.quantity);
+        await homeScreen.clickCartIcon();
+        await myCartScreen.validateMyCartScreen([product1, product2, product3, product4]);
+        await myCartScreen.clickProceedToCheckoutButton();
+        await loginScreen.enterUsername(loginDetails.username);
+        await loginScreen.enterPassword(loginDetails.password);
+        await loginScreen.clickLoginButton();
+        await checkoutScreen.enterShippingAddressDetails(shippingAddressDetails);
+        await checkoutScreen.clickToPaymentButton();
+        await checkoutScreen.enterCardDetails(cardDetails);
+        await checkoutScreen.clickReviewOrderButton();
+        await checkoutScreen.valiadetCheckoutScreen([product1, product2, product3, product4], shippingAddressDetails, cardDetails);
+        await checkoutScreen.clickPlaceOrderButton();
+        await checkoutScreen.validateCheckoutCompleteScreen();
         await checkoutScreen.clickContinueShoppingButton();
     });
 });

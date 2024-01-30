@@ -75,6 +75,27 @@ export class CheckoutScreen extends BaseActions {
             "",
         productPrice: platform === "ANDROID" ?
             "//android.widget.TextView[@text='##PLACEHOLDER##']/following-sibling::android.widget.TextView[@content-desc='product price']" :
+            "",
+        checkoutDeliveryAddressInfo: platform === "ANDROID" ?
+            "~checkout delivery address" :
+            "",
+        deliveryAddressDetailsText: platform === "ANDROID" ?
+            "//android.view.ViewGroup[@content-desc='checkout delivery address']/child::android.widget.TextView[@text='##PLACEHOLDER##']" :
+            "",
+        checkoutPaymentInfo: platform === "ANDROID" ?
+            "~checkout payment info" :
+            "",
+        paymentDetailsText: platform === "ANDROID" ?
+            "//android.view.ViewGroup[@content-desc='checkout payment info']/child::android.widget.TextView[@text='##PLACEHOLDER##']" :
+            "",
+        checkoutCompleteText: platform === "ANDROID" ?
+            "//android.widget.TextView[@text='##PLACEHOLDER##']" :
+            "",
+        imageOnCheckoutCompleteScreen: platform === "ANDROID" ?
+            "//android.view.ViewGroup[@content-desc='checkout complete screen']/android.widget.ScrollView/android.view.ViewGroup/android.widget.ImageView" :
+            "",
+        textViewContainsText: platform === "ANDROID" ?
+            "//android.widget.TextView[contains(@text, '##PLACEHOLDER##')]" :
             ""
     };
 
@@ -218,6 +239,7 @@ export class CheckoutScreen extends BaseActions {
             }
             totalPrice += additionalCharge;
 
+            totalPrice = parseFloat(totalPrice.toFixed(2));
             // total price validation
             const totalPriceUi: number = XpathUtil.extractNumberFromString(await (await $(this.locators.totalPrice)).getText());
             expect(totalPriceUi, 'Total price is not valid').to.be.equal(totalPrice);
@@ -251,12 +273,87 @@ export class CheckoutScreen extends BaseActions {
         }
     }
 
-    async valiadetCheckoutScreen(products: ProductDetails[]): Promise<void> {
+    async validateDelieveryAddress(deliveryAddress: ShippingAddressDetails): Promise<void> {
+        try {
+            const checkoutDeliveryAddressInfoEle: WebdriverIO.Element = await $(this.locators.checkoutDeliveryAddressInfo);
+            let isCheckoutDeliveryAddressInfoDisplaye: boolean = await checkoutDeliveryAddressInfoEle.isDisplayed();
+            if (!isCheckoutDeliveryAddressInfoDisplaye) {
+                await this.swipe(checkoutDeliveryAddressInfoEle);
+            }
+            isCheckoutDeliveryAddressInfoDisplaye = await checkoutDeliveryAddressInfoEle.isDisplayed();
+            expect(isCheckoutDeliveryAddressInfoDisplaye, 'Delivery address should display on the checkout screen').to.be.true;
+            await this.swipe(await $(this.locators.checkoutPaymentInfo));
+
+            const isDiliveryAddressTextDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.deliveryAddressDetailsText, 'Delivery Address'))).isDisplayed();
+            expect(isDiliveryAddressTextDisplayed, 'Delivery Address text should displayed').to.be.true;
+
+            const isNameDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.deliveryAddressDetailsText, deliveryAddress.fullName))).isDisplayed();
+            expect(isNameDisplayed, 'Full name should display with delivery address').to.be.true;
+
+            const isAddressLineDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.deliveryAddressDetailsText, `${deliveryAddress.addressLine1}, ${deliveryAddress.addressLine2}`))).isDisplayed();
+            expect(isAddressLineDisplayed, 'Delivery address should be displayed').to.be.true;
+
+            const isCityAndStateNameDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.deliveryAddressDetailsText, `${deliveryAddress.cityName}, ${deliveryAddress.stateName}`))).isDisplayed();
+            expect(isCityAndStateNameDisplayed, 'City name and state name should display').to.be.true;
+
+            const isCountryNameAndZipCodeDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.deliveryAddressDetailsText, `${deliveryAddress.countryName}, ${deliveryAddress.zipCode}`))).isDisplayed();
+            expect(isCountryNameAndZipCodeDisplayed, 'Country name and zip code should display').to.be.true;
+        } catch (error) {
+            LOGGER.error(`Error while validating address info on the checkout screen\n${error.stack}`);
+            throw error;
+        }
+    }
+
+    async validatePaymentDetails(cardDetails: CardDetails): Promise<void> {
+        try {
+            const checkoutPaymentInfoEle: WebdriverIO.Element = await $(this.locators.checkoutPaymentInfo);
+            let isCheckoutPaymentInfoDisplayed: boolean = await checkoutPaymentInfoEle.isDisplayed();
+            if (!isCheckoutPaymentInfoDisplayed) {
+                await this.swipe(checkoutPaymentInfoEle);
+            }
+            isCheckoutPaymentInfoDisplayed = await checkoutPaymentInfoEle.isDisplayed();
+            expect(isCheckoutPaymentInfoDisplayed, 'Payment method should display on the checkout screen').to.be.true;
+            await this.swipe(XpathUtil.getPlaceholderReplaced(this.locators.paymentDetailsText, `Exp: ${cardDetails.expirationDate.slice(0, 2)}/${cardDetails.expirationDate.slice(2)}`));
+
+            const isPaymentMethodTextDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.paymentDetailsText, 'Payment Method'))).isDisplayed();
+            expect(isPaymentMethodTextDisplayed, 'Payment Details text should display on the checkout screen').to.be.true;
+
+            const isNameDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.paymentDetailsText, cardDetails.fullName))).isDisplayed();
+            expect(isNameDisplayed, 'Card holder name should be display').to.be.true;
+
+            const isCardNumberDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.paymentDetailsText, cardDetails.cardNumber.replace(/(\d{4})(?=\d)/g, "$1 ")))).isDisplayed();
+            expect(isCardNumberDisplayed, 'Card number should be display on the checkout screen').to.be.true;
+
+            const isCardExpiryDateDisplayed: boolean = await (await $(XpathUtil.getPlaceholderReplaced(this.locators.paymentDetailsText, `Exp: ${cardDetails.expirationDate.slice(0, 2)}/${cardDetails.expirationDate.slice(2)}`))).isDisplayed();
+            expect(isCardExpiryDateDisplayed, 'Card expiry date should display').to.be.true;
+        } catch (error) {
+            LOGGER.error(`Error while validating payment info on the checkout screen\n${error.stack}`);
+            throw error;
+        }
+    }
+
+    async validateCheckoutCompleteScreen(): Promise<void> {
+        try {
+            await (await $(XpathUtil.getPlaceholderReplaced(this.locators.checkoutCompleteText, 'Checkout Complete'))).waitForDisplayed();
+            await (await $(XpathUtil.getPlaceholderReplaced(this.locators.checkoutCompleteText, 'Thank you for your order'))).waitForDisplayed();
+            await (await $(XpathUtil.getPlaceholderReplaced(this.locators.checkoutCompleteText, 'Your new swag is on its way'))).waitForDisplayed();
+            await (await $(XpathUtil.getPlaceholderReplaced(this.locators.textViewContainsText, 'Your order has been dispatched and will arrive as fast as the pony gallops!'))).waitForDisplayed();
+            await (await $(this.locators.imageOnCheckoutCompleteScreen)).waitForDisplayed();
+            await (await $(this.locators.continueShoppingButton)).waitForDisplayed();
+        } catch (error) {
+            LOGGER.error(`Error while validating Checkout Complete Screen\n${error.stack}`);
+            throw error;
+        }
+    }
+
+    async valiadetCheckoutScreen(products: ProductDetails[], deliveryAddress: ShippingAddressDetails, cardDetails: CardDetails): Promise<void> {
         try {
             await (await $(this.locators.checkoutHeader)).waitForDisplayed();
             await (await $(this.locators.reviewYourOrderText)).waitForDisplayed({ timeout: 10000 });
-
             await this.validateProductDetails(products);
+            await this.validateDelieveryAddress(deliveryAddress);
+            await this.validatePaymentDetails(cardDetails);
+            await (await $(this.locators.placeOrderButton)).waitForDisplayed();
         } catch (error) {
             LOGGER.error(`Error while validating chechout screen\n${error.stack}`);
             throw error;

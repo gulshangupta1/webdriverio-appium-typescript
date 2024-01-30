@@ -145,6 +145,8 @@ export class HomeScreen extends BaseActions {
                     return false;
                 }
             }
+
+            previousProductPrice = currentProductPrice;
         }
 
         return true;
@@ -176,6 +178,8 @@ export class HomeScreen extends BaseActions {
                     return false;
                 }
             }
+
+            previousProductName = currentProductName;
         }
 
         return true;

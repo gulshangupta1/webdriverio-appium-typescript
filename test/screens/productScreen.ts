@@ -56,8 +56,8 @@ export class ProductScreen {
             expect(productName, 'Product name is not matching').to.be.equal(productDetails.name);
 
             // Product price validation
-            const productPrice: number = XpathUtil.extractNumberFromString(await (await $(this.locators.productPrice)).getText());
-            expect(productPrice, 'Product price is not matching').to.be.equal(productDetails.price);
+            const productPriceUi: number = XpathUtil.extractNumberFromString(await (await $(this.locators.productPrice)).getText());
+            expect(productPriceUi, 'Product price is not matching').to.be.equal(productDetails.price);
 
             // Product color validation
             if (productDetails.availableColors !== undefined) {

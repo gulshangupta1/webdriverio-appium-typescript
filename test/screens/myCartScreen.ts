@@ -121,6 +121,7 @@ export class MyCartScreen extends BaseActions {
 
                 // Validating product price
                 const productPriceEle: WebdriverIO.Element = await $(XpathUtil.getPlaceholderReplaced(this.locators.productPrice, product.name));
+                await this.swipe(productPriceEle);
                 const productPriceUi: number = XpathUtil.extractNumberFromString(await productPriceEle.getText());
                 expect(productPriceUi, 'Product price is not matching').to.be.equal(product.price);
 
