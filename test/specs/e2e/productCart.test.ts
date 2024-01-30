@@ -13,12 +13,14 @@ import { ShippingAddressDetails } from '../../resources/customTypes/shippingAddr
 import * as shippingAddressDetailsJson from './../../resources/testdata/shippingAddressDetails.json';
 import { CardDetails } from '../../resources/customTypes/cardDetails';
 import * as cardDetailsJson from './../../resources/testdata/cardDetails.json';
+import { HomeScreenUtil } from '../../commonFunctions/homeScreenUtil';
 
 let homeScreen: HomeScreen;
 let productScreen: ProductScreen;
 let myCartScreen: MyCartScreen;
 let loginScreen: LoginScreen;
 let checkoutScreen: CheckoutScreen;
+let homeScreenUtil: HomeScreenUtil;
 
 const specName: string = 'Product cart scenarios'
 describe(specName, () => {
@@ -29,6 +31,7 @@ describe(specName, () => {
         myCartScreen = new MyCartScreen();
         loginScreen = new LoginScreen();
         checkoutScreen = new CheckoutScreen();
+        homeScreenUtil = new HomeScreenUtil();
     });
 
     afterEach(async () => {
@@ -94,6 +97,7 @@ describe(specName, () => {
             name: 'Sauce Labs Onesie',
             price: 7.99,
         }
+        product2.quantity = 1;
 
         await homeScreen.clickOnProduct(product1.name);
         await productScreen.validateProductScreen(product1);
@@ -110,10 +114,12 @@ describe(specName, () => {
 
     it('Should be able to empty cart', async () => {
         const product1: ProductDetails = FileUtil.convertJsonToCustomType(productDetailsJson);
+        product1.quantity = 1;
 
         const product2: ProductDetails = {
             name: 'Sauce Labs Onesie',
             price: 7.99,
+            quantity: 1
         }
 
         await homeScreen.clickOnProduct(product1.name);
@@ -130,7 +136,7 @@ describe(specName, () => {
     });
 
     it('Should be able to add product with quantity greater than 1', async () => {
-        let product: ProductDetails = FileUtil.convertJsonToCustomType(productDetailsJson);
+        const product: ProductDetails = FileUtil.convertJsonToCustomType(productDetailsJson);
         product.quantity = 3;
 
         await homeScreen.clickOnProduct(product.name);
@@ -152,6 +158,7 @@ describe(specName, () => {
 
     it('Should be able to place a an order with single product', async () => {
         const product: ProductDetails = FileUtil.convertJsonToCustomType(productDetailsJson);
+        product.quantity = 1;
         const loginDetails: LoginDetails = FileUtil.convertJsonToCustomType(loginDetailsJson);
         const shippingAddressDetails: ShippingAddressDetails = FileUtil.convertJsonToCustomType(shippingAddressDetailsJson);
         const cardDetails: CardDetails = FileUtil.convertJsonToCustomType(cardDetailsJson);
@@ -173,6 +180,7 @@ describe(specName, () => {
         await checkoutScreen.clickPlaceOrderButton();
         await checkoutScreen.validateCheckoutCompleteScreen();
         await checkoutScreen.clickContinueShoppingButton();
+        await homeScreenUtil.logout();
     });
 
     it('Should be able to place a an order with multiple products', async () => {
@@ -181,6 +189,7 @@ describe(specName, () => {
         const cardDetails: CardDetails = FileUtil.convertJsonToCustomType(cardDetailsJson);
 
         const product1: ProductDetails = FileUtil.convertJsonToCustomType(productDetailsJson);
+        product1.quantity = 1;
         const product2: ProductDetails = {
             name: 'Sauce Labs Onesie',
             price: 7.99,
@@ -197,6 +206,7 @@ describe(specName, () => {
             quantity: 1
         };
 
+        await homeScreenUtil.login(loginDetails.username, loginDetails.password);
         await homeScreen.clickOnProduct(product1.name);
         await productScreen.validateProductScreen(product1);
         await productScreen.addProductToCart();
@@ -215,9 +225,6 @@ describe(specName, () => {
         await homeScreen.clickCartIcon();
         await myCartScreen.validateMyCartScreen([product1, product2, product3, product4]);
         await myCartScreen.clickProceedToCheckoutButton();
-        await loginScreen.enterUsername(loginDetails.username);
-        await loginScreen.enterPassword(loginDetails.password);
-        await loginScreen.clickLoginButton();
         await checkoutScreen.enterShippingAddressDetails(shippingAddressDetails);
         await checkoutScreen.clickToPaymentButton();
         await checkoutScreen.enterCardDetails(cardDetails);

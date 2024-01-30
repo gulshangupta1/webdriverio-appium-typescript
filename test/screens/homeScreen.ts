@@ -64,6 +64,7 @@ export class HomeScreen extends BaseActions {
 
     async clickMenuButton(): Promise<void> {
         const hamburgerMenuIconEle = await $(this.locators.menuIcon);
+        await hamburgerMenuIconEle.waitForDisplayed();
         await hamburgerMenuIconEle.click();
     }
 
