@@ -97,10 +97,10 @@ export class HomeScreen extends BaseActions {
 
     async clickOnProduct(productName: string): Promise<void> {
         try {
-            const product = await $(XpathUtil.getPlaceholderReplaced(this.locators.productByName, productName));
-            await this.swipe(product);
-            await product.waitForDisplayed({ timeout: 30000 });
-            await product.click();
+            const productEle = await $(XpathUtil.getPlaceholderReplaced(this.locators.productByName, productName));
+            await this.swipe(productEle);
+            await productEle.waitForDisplayed({ timeout: 30000 });
+            await productEle.click();
         }
         catch (error) {
             LOGGER.error(`Product ${productName} not available\n${error.stack}`);
@@ -145,6 +145,8 @@ export class HomeScreen extends BaseActions {
                     return false;
                 }
             }
+
+            previousProductPrice = currentProductPrice;
         }
 
         return true;
@@ -176,6 +178,8 @@ export class HomeScreen extends BaseActions {
                     return false;
                 }
             }
+
+            previousProductName = currentProductName;
         }
 
         return true;

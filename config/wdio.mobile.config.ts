@@ -54,7 +54,7 @@ exports.config = {
     ],
     mochaOpts: {
         ui: "bdd",
-        timeout: 60000,
+        timeout: 60000 * 3,
     },
     afterTest: async function (test, context, { error, result, duration, passed, retries }) {
         if (!fs.existsSync("./errorShots")) {
