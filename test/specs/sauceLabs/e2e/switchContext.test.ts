@@ -1,8 +1,8 @@
-import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
-import { SwitchContextUtil } from "../../utilities/actions/switchContextUtil";
-import { MenuScreen } from "../screens/menuScreen";
-import { HomeScreen } from "../screens/homeScreen";
-import { WebviewScreen } from "../screens/webviewScreen";
+import { LoggerHelper } from "../../../../utilities/reporting/loggerHelper";
+import { SwitchContextUtil } from "../../../../utilities/actions/switchContextUtil";
+import { MenuScreen } from "../../../screens/menuScreen";
+import { HomeScreen } from "../../../screens/homeScreen";
+import { WebviewScreen } from "../../../screens/webviewScreen";
 
 let homeScreen: HomeScreen;
 let hamburgerMenuScreen: MenuScreen;

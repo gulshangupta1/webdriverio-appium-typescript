@@ -149,7 +149,7 @@ export class SwipeActionsUtil {
      * @param {number} [maxScrollAttempts=5] - The maximum number of scroll attempts (default: 5).
      * @returns {Promise<boolean>} - A Promise that resolves to `true` if the element is found, `false` otherwise.
      */
-    async horizontalSwipeByPercentage(element: string | WebdriverIO.Element, startPercentage: number = 0, endPercentage: number = 100, maxScrollAttempts: number = 5): Promise<boolean> {
+    async horizontalSwipeByPercentage(element: string | WebdriverIO.Element, startPercentage: number = 0, endPercentage: number = 100, maxScrollAttempts: number = 5): Promise<void> {
         let elementFound: boolean = false;
 
         try {
@@ -187,4 +187,46 @@ export class SwipeActionsUtil {
             throw err;
         }
     }
+
+    /*
+        // Swipe using driver.touchPerform() method
+        async swipeTouchPerform(maxScrollAttempts: number = 1): Promise<void> {
+            try {
+                const startX = 500;
+                const startY = 800;
+                const endY = 200;
+    
+                await driver.touchPerform([
+                    {
+                        action: 'press',
+                        options: {
+                            x: startX,
+                            y: startY
+                        }
+                    },
+                    {
+                        action: 'wait',
+                        options: {
+                            ms: 500
+                        }
+                    },
+                    {
+                        action: 'moveTo',
+                        options: {
+                            x: startX,
+                            y: endY
+                        }
+                    },
+                    {
+                        action: 'release',
+                        options: {}
+                    }
+                ]);
+                await driver.pause(3000);
+            } catch (err) {
+                LOGGER.error(`Error performing swipe: \n${err.stack}`);
+                throw err;
+            }
+        }
+    */
 }

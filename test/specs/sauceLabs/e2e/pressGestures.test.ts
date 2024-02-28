@@ -1,5 +1,5 @@
-import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
-import { HomeScreen } from "../screens/homeScreen";
+import { LoggerHelper } from "../../../../utilities/reporting/loggerHelper";
+import { HomeScreen } from "../../../screens/homeScreen";
 
 let homeScreen: HomeScreen;
 

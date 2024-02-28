@@ -1,10 +1,10 @@
-import { HomeScreenUtil } from "../commonFunctions/homeScreenUtil";
-import { FileUtil } from "../../utilities/file/fileUtil";
-import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
-import { LoginDetails } from "../resources/customTypes/loginDetails";
-import { HomeScreen } from "../screens/homeScreen";
-import { LoginScreen } from "../screens/loginScreen";
-import * as loginDetailsJson from "./../resources/testdata/loginDetails.json";
+import { HomeScreenUtil } from "../../../commonFunctions/homeScreenUtil";
+import { FileUtil } from "../../../../utilities/file/fileUtil";
+import { LoggerHelper } from "../../../../utilities/reporting/loggerHelper";
+import { LoginDetails } from "../../../resources/customTypes/loginDetails";
+import { HomeScreen } from "../../../screens/homeScreen";
+import { LoginScreen } from "../../../screens/loginScreen";
+import * as loginDetailsJson from "../../../resources/testdata/loginDetails.json";
 
 let homeScreen: HomeScreen;
 let loginScreen: LoginScreen;

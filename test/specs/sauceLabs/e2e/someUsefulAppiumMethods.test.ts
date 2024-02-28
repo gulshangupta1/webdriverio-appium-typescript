@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import { LOGGER, LoggerHelper } from "../../utilities/reporting/loggerHelper";
-import { AndroidKeyActions } from "../../utilities/actions/androidKeyActions";
+import { LOGGER, LoggerHelper } from "../../../../utilities/reporting/loggerHelper";
+import { AndroidKeyActions } from "../../../../utilities/actions/androidKeyActions";
 
 const NetworkConnectionStatus = {
     NO_CONNECTION: 0,
@@ -20,7 +20,7 @@ let connectionStatus: number;
 let androidKeyActions: AndroidKeyActions;
 
 const specName: string = 'Some useful appium methods tests';
-describe.skip(specName, () => {
+describe(specName, () => {
     before(async () => {
         LoggerHelper.setupLogger(specName);
         androidKeyActions = new AndroidKeyActions();
@@ -255,6 +255,23 @@ describe.skip(specName, () => {
         await driver.terminateApp(cameraAppPackage);
 
         await driver.pause(1000);
+    });
+
+    it.only('Toggle network speed', async () => {
+        // await driver.toggleNetworkSpeed('gsm');
+        // await driver.toggleNetworkSpeed('edge');
+        // // await driver.toggleNetworkSpeed('hscsd');    // Not working
+        // await driver.toggleNetworkSpeed('gprs');
+        // await driver.toggleNetworkSpeed('umts');
+        // await driver.toggleNetworkSpeed('hsdpa');
+        // await driver.toggleNetworkSpeed('lte');
+        // await driver.toggleNetworkSpeed('evdo');
+        // // Change back to previous speed
+        // await driver.toggleNetworkSpeed('full');
+
+        // Get bar details
+        // const result = await driver.getSystemBars();
+        // console.log(result);
     });
 });
 

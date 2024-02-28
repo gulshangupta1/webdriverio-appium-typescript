@@ -1,6 +1,6 @@
-import { HomeScreen } from "../screens/homeScreen";
-import { BaseActions } from "../../utilities/actions/baseActions";
-import { LoggerHelper } from "../../utilities/reporting/loggerHelper";
+import { HomeScreen } from "../../../screens/homeScreen";
+import { BaseActions } from "../../../../utilities/actions/baseActions";
+import { LoggerHelper } from "../../../../utilities/reporting/loggerHelper";
 
 let homeScreen: HomeScreen;
 let baseActions: BaseActions;
